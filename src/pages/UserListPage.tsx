@@ -1,5 +1,4 @@
 import {
-  Divider,
   HStack,
   Table,
   Tbody,
@@ -7,15 +6,85 @@ import {
   Th,
   Thead,
   Tr,
+  BoxProps,
+  Button,
 } from '@chakra-ui/react';
+import { useTable } from 'react-table';
+import { useMemo, FC } from 'react';
 import { InputWithLeftIcon } from 'src/components/atoms/Input/InputWithLeftIcon';
 import { PageLayoutContainer } from 'src/components/atoms/templates/PageLayoutContainer';
 import { HeadingMain } from 'src/components/atoms/Typography/HeadingMain';
 import { SearchIcon } from 'src/components/icons/SearchIcon';
 
 interface UserListPageProps {}
+interface ExampleObject {
+  id: string;
+  user: string;
+  status: string;
+  actions: string;
+  role: string;
+}
 
-export const UserListPage: React.FC<UserListPageProps> = ({}) => {
+export const UserListPage: FC<UserListPageProps> = ({}) => {
+  const data = useMemo(
+    () => [
+      {
+        id: '1',
+        user: 'შოთიუს',
+        status: 'active',
+        actions: 'action1 ',
+        role: 'admin',
+      },
+      {
+        id: '1',
+        user: 'შოთიუს',
+        status: 'active',
+        actions: 'action1 ',
+        role: 'admin',
+      },
+      {
+        id: '1',
+        user: 'შოთიუს',
+        status: 'active',
+        actions: 'action1 ',
+        role: 'admin',
+      },
+    ],
+    []
+  );
+
+  const columns = useMemo<{ Header: string; accessor: keyof ExampleObject }[]>(
+    () => [
+      {
+        Header: 'ID',
+        accessor: 'id', // accessor is the "key" in the data
+      },
+      {
+        Header: 'USER',
+        accessor: 'user',
+      },
+      {
+        Header: 'ROLE',
+        accessor: 'role', // accessor is the "key" in the data
+      },
+      {
+        Header: 'STATUS',
+        accessor: 'status',
+      },
+      {
+        Header: 'ACTIONS',
+        accessor: 'actions', // accessor is the "key" in the data
+      },
+    ],
+    []
+  );
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable<ExampleObject>({ columns, data });
+
+  console.log('head erGroup: ', headerGroups);
+  // console.log('row: ', rows.)
+
   return (
     <>
       <PageLayoutContainer my="64px">
@@ -24,54 +93,72 @@ export const UserListPage: React.FC<UserListPageProps> = ({}) => {
           <InputWithLeftIcon icon={<SearchIcon />} />
         </HStack>
       </PageLayoutContainer>
-      {/* <Divider /> */}
+
       <PageLayoutContainer
         _before={{
           content: '""',
-          // height: '50px',
           position: 'absolute',
-          left: '0',
-          // top: 0,
+          left: 0,
           right: 0,
-          borderTop: '1px solid black',
-          borderBottom: '1px solid black',
+          height: '50px',
+          borderTop: '1px solid #ced3dd',
+          borderBottom: '1px solid #ced3dd',
+          opacity: 0.5,
         }}
       >
-        <Table style={{ borderCollapse: 'collapse' }}>
-          <Thead border={'none'}>
-            <Tr>
-              <Th p="0">Plus</Th>
-              <Th>user</Th>
-              <Th>Role</Th>
-              <Th>Status</Th>
-              <Th>Actions</Th>
-            </Tr>
+        <Table {...getTableProps()} style={{ borderCollapse: 'collapse' }}>
+          <Thead>
+            {headerGroups.map((headerGroup) => (
+              <Tr {...headerGroup.getHeaderGroupProps()}>
+                <TableHeader i={0} headerGroup={headerGroup}>
+                  <Button p="8px" borderRadius={"100px"}>+</Button>
+                </TableHeader>
+                <TableHeader i={1} headerGroup={headerGroup} />
+                <TableHeader i={2} headerGroup={headerGroup} />
+                <TableHeader i={3} headerGroup={headerGroup} />
+                <TableHeader i={4} headerGroup={headerGroup} />
+              </Tr>
+            ))}
           </Thead>
-          <Tbody>
-            <Tr>
-              <Td p="0">id</Td>
-              <Td>user</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td>25.4</Td>
-            </Tr>
-            <Tr>
-              <Td p="0">id</Td>
-              <Td>user</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td>25.4</Td>
-            </Tr>
-            <Tr>
-              <Td p="0">id</Td>
-              <Td>user</Td>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td>25.4</Td>
-            </Tr>
+          <Tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <Td {...cell.getCellProps()} px="0">
+                        {cell.render('Cell')}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </PageLayoutContainer>
     </>
   );
 };
+
+interface TableHeaderProps {
+  i: number;
+  headerGroup: any;
+}
+
+const TableHeader: FC<BoxProps & TableHeaderProps> = ({
+  i,
+  headerGroup,
+  children,
+  ...rest
+}) => (
+  <Th
+    p="16px 0px"
+    border="none"
+    {...headerGroup.headers[i].getHeaderProps()}
+    {...rest}
+  >
+    {children || headerGroup.headers[i].Header}
+  </Th>
+);

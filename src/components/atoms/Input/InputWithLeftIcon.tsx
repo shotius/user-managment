@@ -9,7 +9,7 @@ export const InputWithLeftIcon: React.FC<InputWithLeftIconProps> = ({
 }) => {
   return (
     <InputGroup w="auto">
-      <InputLeftElement children={Icon} />
+      <InputLeftElement children={Icon} opacity={0.8}/>
       <Input
         placeholder="Type to filter users..."
         border="1px solid lightGrey"
