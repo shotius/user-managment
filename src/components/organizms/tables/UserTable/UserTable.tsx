@@ -42,8 +42,7 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
             <Tr {...row.getRowProps()}>
               {row.cells.map((cell) => (
                 <TableCell
-                  px="0"
-                  pl="2"
+                  pl="4"
                   py="8"
                   cell={cell}
                   {...cell.getCellProps()}

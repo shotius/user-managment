@@ -95,14 +95,14 @@ export const useUserTable = () => {
       case 'user':
         console.log(cell.row.original);
         return (
-          <Td w="300px" {...rest}>
+          <Td w="500px" {...rest}>
             <TextMain>{cell.render('Cell')}</TextMain>
             <TextSecondary>{cell.row.original.email}</TextSecondary>
           </Td>
         );
       case 'role':
         return (
-          <Td isNumeric={true} maxW="100px" {...rest}>
+          <Td w="10px" {...rest}>
             {cell.render('Cell')}
           </Td>
         );
