@@ -1,16 +1,22 @@
 import { Text, TextProps } from '@chakra-ui/react';
-import { FONT_DEFAULT } from 'src/utils/constants';
+import { FONT_DEFAULT, SEMI_BOLD } from 'src/utils/constants';
 
 interface TextMainProps {}
 
 export const TextMain: React.FC<TextMainProps & TextProps> = ({
   color = '#26292E',
-  fontFamily = { FONT_DEFAULT },
+  fontFamily =  FONT_DEFAULT ,
+  fontWeight = SEMI_BOLD,
   children,
   ...rest
 }) => {
   return (
-    <Text color={color} fontFamily={fontFamily} fontWeight={700} {...rest}>
+    <Text
+      color={color}
+      fontFamily={fontFamily}
+      fontWeight={fontWeight}
+      {...rest}
+    >
       {children}
     </Text>
   );

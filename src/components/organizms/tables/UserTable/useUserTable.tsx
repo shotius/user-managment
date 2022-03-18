@@ -1,24 +1,29 @@
-import { Button, IconButton, Td } from '@chakra-ui/react';
+import { HStack, Icon, IconButton, Switch, Td } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { Cell } from 'react-table';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
 import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
+import { KeyIcon } from 'src/components/icons/KeyIcon';
+import { SettingIcon } from 'src/components/icons/SettingIcon';
+import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
-import { ExampleObject, TdProps } from 'src/types';
+import { ExampleObject, IUserTableColumn, TdProps } from 'src/types';
 
-interface getAppropriateCellProps {
+interface getAppropriateCellProps extends TdProps {
   cell: Cell<ExampleObject, any>;
 }
 
+const tableHeaders = ['ID', 'USER', 'ROLE', 'STATUS', 'ACTIONS'] as const;
+
 export const useUserTable = () => {
-  const data = useMemo(
+  const data = useMemo<ExampleObject[]>(
     () => [
       {
         id: '1',
         user: 'შოთიუს',
         status: 'active',
         actions: 'action1 ',
-        role: 'admin',
+        role: 'Admin',
         email: 'sh.archemashvili@gmail.com',
       },
       {
@@ -26,7 +31,7 @@ export const useUserTable = () => {
         user: 'შოთიუს',
         status: 'active',
         actions: 'action1 ',
-        role: 'admin',
+        role: 'User',
         email: 'sh.archemashvili@gmail.com',
       },
       {
@@ -34,47 +39,26 @@ export const useUserTable = () => {
         user: 'შოთიუს',
         status: 'active',
         actions: 'action1 ',
-        role: 'admin',
+        role: 'Admin',
         email: 'sh.archemashvili@gmail.com',
       },
     ],
     []
   );
 
-  const columns = useMemo<{ Header: string; accessor: keyof ExampleObject }[]>(
-    () => [
-      {
-        Header: 'ID',
-        accessor: 'id', // accessor is the "key" in the data
-        textAlign: 'center',
-      },
-      {
-        Header: 'USER',
-        accessor: 'user',
-      },
-      {
-        Header: 'ROLE',
-        accessor: 'role',
-        isNumeric: true,
-      },
-      {
-        Header: 'STATUS',
-        accessor: 'status',
-        isNumeric: true,
-      },
-      {
-        Header: 'ACTIONS',
-        accessor: 'actions',
-        isNumeric: true,
-      },
-    ],
+  // create collumns
+  const columns = useMemo<IUserTableColumn[]>(
+    () =>
+      tableHeaders.map((header) => ({
+        Header: header,
+        accessor: header.toLowerCase() as keyof ExampleObject, // accessor is the "key" in the data
+      })),
     []
   );
 
-  const getAppropriateCell = ({
-    cell,
-    ...rest
-  }: getAppropriateCellProps & TdProps) => {
+  const getAppropriateHeading = ({}) => {};
+
+  const getAppropriateCell = ({ cell, ...rest }: getAppropriateCellProps) => {
     const id = cell.column.id as keyof ExampleObject;
     switch (id) {
       case 'id':
@@ -93,7 +77,6 @@ export const useUserTable = () => {
           </Td>
         );
       case 'user':
-        console.log(cell.row.original);
         return (
           <Td w="500px" {...rest}>
             <TextMain>{cell.render('Cell')}</TextMain>
@@ -103,19 +86,36 @@ export const useUserTable = () => {
       case 'role':
         return (
           <Td w="10px" {...rest}>
-            {cell.render('Cell')}
+            <HStack>
+              <TextMain>{cell.render('Cell')}</TextMain>
+              {cell.row.original.role === 'Admin' ? (
+                <Icon as={KeyIcon} />
+              ) : null}
+            </HStack>
           </Td>
         );
       case 'status':
         return (
-          <Td isNumeric={true} {...rest}>
-            {cell.render('Cell')}
+          <Td isNumeric={true} pr="45px" {...rest}>
+            <Switch size="md" defaultChecked={true} />
           </Td>
         );
       case 'actions':
         return (
-          <Td isNumeric={true} {...rest}>
-            {cell.render('Cell')}
+          <Td isNumeric={true} {...rest} p="0">
+            <HStack justify={'end'}>
+              <IconButton
+                icon={<SettingIcon />}
+                aria-label="settings"
+                bg="white"
+                size={'lg'}
+              />
+              <IconButton
+                icon={<TrashBinIcon />}
+                aria-label="deleteUser"
+                bg="white"
+              />
+            </HStack>
           </Td>
         );
       default:
@@ -127,5 +127,5 @@ export const useUserTable = () => {
     }
   };
 
-  return { getAppropriateCell, data, columns };
+  return { data, columns, getAppropriateCell, getAppropriateHeading };
 };
