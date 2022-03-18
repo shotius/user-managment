@@ -1,19 +1,46 @@
-import { HStack, Icon, IconButton, Switch, Td } from '@chakra-ui/react';
+import {
+  Button,
+  HStack,
+  Icon,
+  IconButton,
+  Switch,
+  Td,
+  Th,
+} from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { Cell } from 'react-table';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
 import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
+import { DropdownIcon } from 'src/components/icons/DropdownIcon';
 import { KeyIcon } from 'src/components/icons/KeyIcon';
 import { SettingIcon } from 'src/components/icons/SettingIcon';
 import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
-import { ExampleObject, IUserTableColumn, TdProps } from 'src/types';
+import {
+  ExampleObject,
+  IUserTableColumn,
+  IUserTableColumnTypes,
+  TdProps,
+  ThProps,
+} from 'src/types';
 
 interface getAppropriateCellProps extends TdProps {
   cell: Cell<ExampleObject, any>;
 }
 
-const tableHeaders = ['ID', 'USER', 'ROLE', 'STATUS', 'ACTIONS'] as const;
+interface getAppropriateHeading extends ThProps {
+  header: UserObjectKeyTypes;
+}
+
+type UserObjectKeyTypes = keyof ExampleObject;
+
+const tableHeaders: IUserTableColumnTypes[] = [
+  'id',
+  'user',
+  'role',
+  'status',
+  'actions',
+];
 
 export const useUserTable = () => {
   const data = useMemo<ExampleObject[]>(
@@ -56,7 +83,24 @@ export const useUserTable = () => {
     []
   );
 
-  const getAppropriateHeading = ({}) => {};
+  const getAppropriateHeading = ({
+    header,
+    ...rest
+  }: getAppropriateHeading) => {
+    switch (header) {
+      default:
+        return (
+          <Th p="16px 0px" border="none" {...rest}>
+            <Button variant={'ghost'} _hover={{ background: 'transparent' }}>
+              <HStack>
+                <TextMain fontWeight={700}>{header.toUpperCase()}</TextMain>
+                <Icon as={DropdownIcon} w="3" />
+              </HStack>
+            </Button>
+          </Th>
+        );
+    }
+  };
 
   const getAppropriateCell = ({ cell, ...rest }: getAppropriateCellProps) => {
     const id = cell.column.id as keyof ExampleObject;
