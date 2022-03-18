@@ -1,16 +1,15 @@
 import {
-  HStack,
+  BoxProps, HStack,
   Table,
   Tbody,
   Td,
   Th,
   Thead,
-  Tr,
-  BoxProps,
-  Button,
+  Tr
 } from '@chakra-ui/react';
-import { useTable } from 'react-table';
-import { useMemo, FC } from 'react';
+import { FC, useMemo } from 'react';
+import { Cell, HeaderGroup, useTable } from 'react-table';
+import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { InputWithLeftIcon } from 'src/components/atoms/Input/InputWithLeftIcon';
 import { PageLayoutContainer } from 'src/components/atoms/templates/PageLayoutContainer';
 import { HeadingMain } from 'src/components/atoms/Typography/HeadingMain';
@@ -58,6 +57,7 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
       {
         Header: 'ID',
         accessor: 'id', // accessor is the "key" in the data
+        textAlign: 'center',
       },
       {
         Header: 'USER',
@@ -65,15 +65,18 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
       },
       {
         Header: 'ROLE',
-        accessor: 'role', // accessor is the "key" in the data
+        accessor: 'role',
+        isNumeric: true,
       },
       {
         Header: 'STATUS',
         accessor: 'status',
+        isNumeric: true,
       },
       {
         Header: 'ACTIONS',
-        accessor: 'actions', // accessor is the "key" in the data
+        accessor: 'actions',
+        isNumeric: true,
       },
     ],
     []
@@ -82,8 +85,8 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable<ExampleObject>({ columns, data });
 
-  console.log('head erGroup: ', headerGroups);
-  // console.log('row: ', rows.)
+  // console.log('head erGroup: ', headerGroups);
+  // console.log('row: ', rows);
 
   return (
     <>
@@ -100,7 +103,7 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
           position: 'absolute',
           left: 0,
           right: 0,
-          height: '50px',
+          height: '55px',
           borderTop: '1px solid #ced3dd',
           borderBottom: '1px solid #ced3dd',
           opacity: 0.5,
@@ -110,8 +113,13 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
           <Thead>
             {headerGroups.map((headerGroup) => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
-                <TableHeader i={0} headerGroup={headerGroup}>
-                  <Button p="8px" borderRadius={"100px"}>+</Button>
+                <TableHeader
+                  i={0}
+                  headerGroup={headerGroup}
+                  position="relative"
+                  minW="20px"
+                >
+                  <CreateButton />
                 </TableHeader>
                 <TableHeader i={1} headerGroup={headerGroup} />
                 <TableHeader i={2} headerGroup={headerGroup} />
@@ -125,13 +133,9 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
               prepareRow(row);
               return (
                 <Tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <Td {...cell.getCellProps()} px="0">
-                        {cell.render('Cell')}
-                      </Td>
-                    );
-                  })}
+                  {row.cells.map((cell) => (
+                    <TableRowData cell={cell} key={cell.value} />
+                  ))}
                 </Tr>
               );
             })}
@@ -144,7 +148,7 @@ export const UserListPage: FC<UserListPageProps> = ({}) => {
 
 interface TableHeaderProps {
   i: number;
-  headerGroup: any;
+  headerGroup: HeaderGroup<ExampleObject>;
 }
 
 const TableHeader: FC<BoxProps & TableHeaderProps> = ({
@@ -152,13 +156,33 @@ const TableHeader: FC<BoxProps & TableHeaderProps> = ({
   headerGroup,
   children,
   ...rest
-}) => (
-  <Th
-    p="16px 0px"
-    border="none"
-    {...headerGroup.headers[i].getHeaderProps()}
-    {...rest}
-  >
-    {children || headerGroup.headers[i].Header}
-  </Th>
-);
+}) => {
+  return (
+    <Th
+      p="16px 0px"
+      border="none"
+      isNumeric={headerGroup.headers[i]['isNumeric']}
+      {...headerGroup.headers[i].getHeaderProps()}
+      {...rest}
+    >
+      {children || headerGroup.headers[i].Header}
+    </Th>
+  );
+};
+
+interface TableRowDataProps {
+  cell: Cell<ExampleObject, any>;
+}
+
+const TableRowData: FC<BoxProps & TableRowDataProps> = ({ cell }) => {
+  return (
+    <Td
+      px="0"
+      isNumeric={cell.column['isNumeric']}
+      textAlign={cell.column['textAlign']}
+      {...cell.getCellProps()}
+    >
+      {cell.render('Cell')}
+    </Td>
+  );
+};
