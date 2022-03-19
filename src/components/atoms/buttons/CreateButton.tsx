@@ -19,7 +19,10 @@ export const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
       fontWeight={'50'}
       _hover={{
         background: "#2A84FF", 
-        transform: "scale(1.05)"
+        filter: "brightness(120%)"
+      }}
+      _active={{
+        filter: "brightness(100%)", 
       }}
       {...rest}
     >

@@ -13,7 +13,7 @@ export const UserTableLayoutContainer: React.FC<
         position: 'absolute',
         left: 0,
         right: 0,
-        height: '65px',
+        height: '70px',
         borderTop: '1px solid #ced3dd',
         borderBottom: '1px solid #ced3dd',
         opacity: 0.5,

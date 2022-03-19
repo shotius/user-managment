@@ -1,14 +1,16 @@
 import {
   Button,
+  Flex,
   HStack,
   Icon,
   IconButton,
   Switch,
-  Td,
-  Th,
+  VStack,
 } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { Cell } from 'react-table';
+import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
+import { CenterVerticaly } from 'src/components/atoms/templates/CenterCerticaly';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
 import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
 import { DropdownIcon } from 'src/components/icons/DropdownIcon';
@@ -16,13 +18,9 @@ import { KeyIcon } from 'src/components/icons/KeyIcon';
 import { SettingIcon } from 'src/components/icons/SettingIcon';
 import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
-import {
-  ExampleObject,
-  IUserTableColumn,
-  IUserTableColumnTypes,
-  TdProps,
-  ThProps,
-} from 'src/types';
+import { ExampleObject, IUserTableColumn, TdProps, ThProps } from 'src/types';
+import { UserProfileButton } from './cells/UserProfileButton';
+import { UserTableHeader } from './cells/UserTableHeader';
 
 interface getAppropriateCellProps extends TdProps {
   cell: Cell<ExampleObject, any>;
@@ -33,14 +31,6 @@ interface getAppropriateHeading extends ThProps {
 }
 
 type UserObjectKeyTypes = keyof ExampleObject;
-
-const tableHeaders: IUserTableColumnTypes[] = [
-  'id',
-  'user',
-  'role',
-  'status',
-  'actions',
-];
 
 export const useUserTable = () => {
   const data = useMemo<ExampleObject[]>(
@@ -75,101 +65,75 @@ export const useUserTable = () => {
 
   // create collumns
   const columns = useMemo<IUserTableColumn[]>(
-    () =>
-      tableHeaders.map((header) => ({
-        Header: header,
-        accessor: header.toLowerCase() as keyof ExampleObject, // accessor is the "key" in the data
-      })),
+    () => [
+      {
+        accessor: 'id',
+        maxWidth: 70,
+        Header: () => <CreateButton />,
+        Cell: () => <UserProfileButton />,
+      },
+      {
+        width: 450,
+        Header: UserTableHeader,
+        accessor: 'user',
+        Cell: ({ row: { original } }) => {
+          return (
+            <CenterVerticaly>
+              <VStack align={'flex-start'} spacing="1" px="2">
+                <TextMain>{original.user}</TextMain>
+                <TextSecondary>{original.email}</TextSecondary>
+              </VStack>
+            </CenterVerticaly>
+          );
+        },
+      },
+      {
+        Header: UserTableHeader,
+        accessor: 'role',
+        Cell: ({ row: { original } }) => (
+          <CenterVerticaly>
+            <HStack>
+              <TextMain>{original.role}</TextMain>
+              {original.role === 'Admin' ? <Icon as={KeyIcon} /> : null}
+            </HStack>
+          </CenterVerticaly>
+        ),
+      },
+      {
+        Header: UserTableHeader,
+        accessor: 'status',
+        Cell: ({ row: { original } }) => (
+          <CenterVerticaly>
+            <Switch size="md" pl="4" defaultChecked={original.isActive} />
+          </CenterVerticaly>
+        ),
+      },
+      {
+        Header: (props) => (
+          <Flex justify={'end'}>
+            <UserTableHeader {...props} />
+          </Flex>
+        ),
+        accessor: 'actions',
+        Cell: () => (
+          <HStack justify={'end'}>
+            <IconButton
+              icon={<SettingIcon />}
+              aria-label="settings"
+              bg="white"
+              size={'lg'}
+            />
+            <IconButton
+              icon={<TrashBinIcon />}
+              aria-label="deleteUser"
+              bg="white"
+            />
+          </HStack>
+        ),
+      },
+    ],
     []
   );
 
-  const getAppropriateHeading = ({
-    header,
-    ...rest
-  }: getAppropriateHeading) => {
-    switch (header) {
-      default:
-        return (
-          <Th p="16px 0px" border="none" {...rest}>
-            <Button variant={'ghost'} _hover={{ background: 'transparent' }}>
-              <HStack>
-                <TextMain fontWeight={700}>{header.toUpperCase()}</TextMain>
-                <Icon as={DropdownIcon} w="3" />
-              </HStack>
-            </Button>
-          </Th>
-        );
-    }
-  };
-
-  const getAppropriateCell = ({ cell, ...rest }: getAppropriateCellProps) => {
-    const id = cell.column.id as keyof ExampleObject;
-    switch (id) {
-      case 'id':
-        return (
-          <Td {...rest}>
-            <IconButton
-              borderRadius={'100px'}
-              bg="transparent"
-              border="1px solid rgba(38, 41, 46, 0.1);"
-              _hover={{
-                background: 'transparent',
-              }}
-              icon={<UserProfileIcon />}
-              aria-label="userProfile"
-            />
-          </Td>
-        );
-      case 'user':
-        return (
-          <Td w="500px" {...rest}>
-            <TextMain>{cell.render('Cell')}</TextMain>
-            <TextSecondary>{cell.row.original.email}</TextSecondary>
-          </Td>
-        );
-      case 'role':
-        return (
-          <Td w="10px" {...rest}>
-            <HStack>
-              <TextMain>{cell.render('Cell')}</TextMain>
-              {cell.row.original.role === 'Admin' ? (
-                <Icon as={KeyIcon} />
-              ) : null}
-            </HStack>
-          </Td>
-        );
-      case 'status':
-        return (
-          <Td isNumeric={true} pr="45px" {...rest}>
-            <Switch size="md" defaultChecked={true} />
-          </Td>
-        );
-      case 'actions':
-        return (
-          <Td isNumeric={true} {...rest} p="0">
-            <HStack justify={'end'}>
-              <IconButton
-                icon={<SettingIcon />}
-                aria-label="settings"
-                bg="white"
-                size={'lg'}
-              />
-              <IconButton
-                icon={<TrashBinIcon />}
-                aria-label="deleteUser"
-                bg="white"
-              />
-            </HStack>
-          </Td>
-        );
-      default:
-        return (
-          <Td isNumeric={true} {...rest}>
-            {cell.render('Cell')}
-          </Td>
-        );
-    }
-  };
-
-  return { data, columns, getAppropriateCell, getAppropriateHeading };
+  return { data, columns };
 };

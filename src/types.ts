@@ -1,5 +1,5 @@
 import { Td, Th } from '@chakra-ui/react';
-import { ComponentProps } from 'react';
+import { ComponentProps, FC } from 'react';
 
 type IUserRole = 'Admin' | 'User';
 
@@ -22,6 +22,5 @@ export type TdProps = ComponentProps<typeof Td>;
 export type ThProps = ComponentProps<typeof Th>;
 
 export interface IUserTableColumn {
-  Header: string;
-  accessor: keyof ExampleObject;
+  Header: any;
 }

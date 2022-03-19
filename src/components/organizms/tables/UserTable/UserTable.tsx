@@ -1,10 +1,6 @@
-import { Table, Tbody, Thead, Tr } from '@chakra-ui/react';
-import { Fragment, useMemo } from 'react';
-import { useTable } from 'react-table';
-import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
+import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { useFlexLayout, useTable } from 'react-table';
 import { ExampleObject } from 'src/types';
-import { TableCell } from './TableCell';
-import { TableHeaderData } from './TableHeaderData';
 import { useUserTable } from './useUserTable';
 
 interface UserTableProps {}
@@ -13,7 +9,7 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
   const { data, columns } = useUserTable();
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<ExampleObject>({ columns, data });
+    useTable<ExampleObject>({ columns, data }, useFlexLayout);
 
   return (
     <Table {...getTableProps()}>
@@ -21,17 +17,19 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
         {headerGroups.map((headerGroup) => {
           return (
             <Tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((heading) => {
-                console.log(heading.Header);
+              {headerGroup.headers.map((column) => {
+                console.log('heading props: ', column);
                 return (
-                  <TableHeaderData
-                    header={'actions'}
+                  <Th
+                    p="16px 0px"
+                    border="none"
                     position="relative"
-                    w="8%"
-                    key={heading.id}
+                    {...column.getHeaderProps({
+                      style: { minWidth: '10px', width: 10 },
+                    })}
                   >
-                    <CreateButton />
-                  </TableHeaderData>
+                    {column.render('Header')}
+                  </Th>
                 );
               })}
             </Tr>
@@ -44,7 +42,9 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
           return (
             <Tr {...row.getRowProps()}>
               {row.cells.map((cell) => (
-                <TableCell pl="4" py="8" cell={cell} {...cell.getCellProps()} />
+                <Td {...cell.getCellProps()} pl="2" pr="0" py="32px">
+                  {cell.render('Cell')}
+                </Td>
               ))}
             </Tr>
           );
