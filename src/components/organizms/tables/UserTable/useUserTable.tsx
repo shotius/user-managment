@@ -1,36 +1,13 @@
-import {
-  Button,
-  Flex,
-  HStack,
-  Icon,
-  IconButton,
-  Switch,
-  VStack,
-} from '@chakra-ui/react';
 import { useMemo } from 'react';
-import { Cell } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
-import { CenterVerticaly } from 'src/components/atoms/templates/CenterCerticaly';
-import { TextMain } from 'src/components/atoms/Typography/TextMain';
-import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
-import { DropdownIcon } from 'src/components/icons/DropdownIcon';
-import { KeyIcon } from 'src/components/icons/KeyIcon';
-import { SettingIcon } from 'src/components/icons/SettingIcon';
-import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
-import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
-import { ExampleObject, IUserTableColumn, TdProps, ThProps } from 'src/types';
+import { ExampleObject, IUserTableColumn } from 'src/types';
+import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
+import { UserActionsCell } from './cells/UserActionsCell';
+import { UserInfoCell } from './cells/UserInfoCell';
 import { UserProfileButton } from './cells/UserProfileButton';
+import { UserRoleCell } from './cells/UserRoleCell';
+import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
-
-interface getAppropriateCellProps extends TdProps {
-  cell: Cell<ExampleObject, any>;
-}
-
-interface getAppropriateHeading extends ThProps {
-  header: UserObjectKeyTypes;
-}
-
-type UserObjectKeyTypes = keyof ExampleObject;
 
 export const useUserTable = () => {
   const data = useMemo<ExampleObject[]>(
@@ -76,60 +53,22 @@ export const useUserTable = () => {
         width: 450,
         Header: UserTableHeader,
         accessor: 'user',
-        Cell: ({ row: { original } }) => {
-          return (
-            <CenterVerticaly>
-              <VStack align={'flex-start'} spacing="1" px="2">
-                <TextMain>{original.user}</TextMain>
-                <TextSecondary>{original.email}</TextSecondary>
-              </VStack>
-            </CenterVerticaly>
-          );
-        },
+        Cell: UserInfoCell,
       },
       {
         Header: UserTableHeader,
         accessor: 'role',
-        Cell: ({ row: { original } }) => (
-          <CenterVerticaly>
-            <HStack>
-              <TextMain>{original.role}</TextMain>
-              {original.role === 'Admin' ? <Icon as={KeyIcon} /> : null}
-            </HStack>
-          </CenterVerticaly>
-        ),
+        Cell: UserRoleCell,
       },
       {
         Header: UserTableHeader,
         accessor: 'status',
-        Cell: ({ row: { original } }) => (
-          <CenterVerticaly>
-            <Switch size="md" pl="4" defaultChecked={original.isActive} />
-          </CenterVerticaly>
-        ),
+        Cell: UserStatusSwitch,
       },
       {
-        Header: (props) => (
-          <Flex justify={'end'}>
-            <UserTableHeader {...props} />
-          </Flex>
-        ),
+        Header: UserActionHeaderCell,
         accessor: 'actions',
-        Cell: () => (
-          <HStack justify={'end'}>
-            <IconButton
-              icon={<SettingIcon />}
-              aria-label="settings"
-              bg="white"
-              size={'lg'}
-            />
-            <IconButton
-              icon={<TrashBinIcon />}
-              aria-label="deleteUser"
-              bg="white"
-            />
-          </HStack>
-        ),
+        Cell: UserActionsCell,
       },
     ],
     []
