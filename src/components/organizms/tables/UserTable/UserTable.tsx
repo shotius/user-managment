@@ -5,7 +5,7 @@ import { useUserTable } from './useUserTable';
 interface UserTableProps {}
 
 export const UserTable: React.FC<UserTableProps> = ({}) => {
-  const { data, columns, getAdditionalColumns } = useUserTable();
+  const { data, columns, getAdditionalColumns, checkIfActive } = useUserTable();
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -46,11 +46,20 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
           prepareRow(row);
           return (
             <Tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <Td {...cell.getCellProps()} pl="2" pr="0" py="32px">
-                  {cell.render('Cell')}
-                </Td>
-              ))}
+              {row.cells.map((cell) => {
+                const isActive = checkIfActive(cell);
+                return (
+                  <Td
+                    {...cell.getCellProps()}
+                    pl="2"
+                    pr="0"
+                    py="32px"
+                    opacity={!isActive ? 0.5 : 1}
+                  >
+                    {cell.render('Cell')}
+                  </Td>
+                );
+              })}
             </Tr>
           );
         })}

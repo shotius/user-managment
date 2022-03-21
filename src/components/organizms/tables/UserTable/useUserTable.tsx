@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Hooks } from 'react-table';
+import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
@@ -17,7 +17,6 @@ export const useUserTable = () => {
         id: '1',
         user: 'G',
         status: 'active',
-        actions: 'action1 ',
         role: 'Admin',
         email: 'sh.archemashvili@gmail.com',
       },
@@ -25,7 +24,6 @@ export const useUserTable = () => {
         id: '2',
         user: 'D',
         status: 'active',
-        actions: 'action1 ',
         role: 'User',
         email: 'sh.archemashvili@gmail.com',
       },
@@ -33,15 +31,13 @@ export const useUserTable = () => {
         id: '3',
         user: 'Z',
         status: 'active',
-        actions: 'action1 ',
         role: 'Admin',
         email: 'sh.archemashvili@gmail.com',
       },
       {
         id: '4',
         user: 'B',
-        status: 'active',
-        actions: 'action1 ',
+        status: 'disabled',
         role: 'Admin',
         email: 'sh.archemashvili@gmail.com',
       },
@@ -49,7 +45,6 @@ export const useUserTable = () => {
         id: '5',
         user: 'A',
         status: 'active',
-        actions: 'action1 ',
         role: 'Admin',
         email: 'sh.archemashvili@gmail.com',
       },
@@ -76,12 +71,6 @@ export const useUserTable = () => {
         accessor: 'status',
         Cell: UserStatusSwitch,
       },
-      {
-        Header: UserActionHeaderCell,
-        accessor: 'actions',
-        Cell: UserActionsCell,
-        disableSortBy: true
-      },
     ],
     []
   );
@@ -100,8 +89,23 @@ export const useUserTable = () => {
         },
       },
       ...columns,
+      // actions collumn
+      {
+        id: 'actions',
+        Header: UserActionHeaderCell,
+        Cell: UserActionsCell,
+      },
     ]);
   };
 
-  return { data, columns, getAdditionalColumns };
+  const checkIfActive = (cell: Cell<ExampleObject, any>) => {
+    const {
+      row: {
+        original: { status },
+      },
+    } = cell;
+    return status === 'active';
+  };
+
+  return { data, columns, getAdditionalColumns, checkIfActive };
 };

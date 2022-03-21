@@ -6,7 +6,7 @@ type IUserRole = 'Admin' | 'User';
 interface IBaseUser {
   id: string;
   user: string;
-  status: string;
+  status: 'active' | "disabled";
   role: IUserRole;
 }
 
