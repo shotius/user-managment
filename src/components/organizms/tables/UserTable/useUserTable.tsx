@@ -15,7 +15,7 @@ export const useUserTable = () => {
     () => [
       {
         id: '1',
-        user: 'Levan',
+        user: 'G',
         status: 'active',
         actions: 'action1 ',
         role: 'Admin',
@@ -23,7 +23,7 @@ export const useUserTable = () => {
       },
       {
         id: '2',
-        user: 'შოთიუს',
+        user: 'D',
         status: 'active',
         actions: 'action1 ',
         role: 'User',
@@ -31,7 +31,23 @@ export const useUserTable = () => {
       },
       {
         id: '3',
-        user: 'Giorgi',
+        user: 'Z',
+        status: 'active',
+        actions: 'action1 ',
+        role: 'Admin',
+        email: 'sh.archemashvili@gmail.com',
+      },
+      {
+        id: '4',
+        user: 'B',
+        status: 'active',
+        actions: 'action1 ',
+        role: 'Admin',
+        email: 'sh.archemashvili@gmail.com',
+      },
+      {
+        id: '5',
+        user: 'A',
         status: 'active',
         actions: 'action1 ',
         role: 'Admin',
@@ -64,6 +80,7 @@ export const useUserTable = () => {
         Header: UserActionHeaderCell,
         accessor: 'actions',
         Cell: UserActionsCell,
+        disableSortBy: true
       },
     ],
     []

@@ -7,7 +7,6 @@ interface IBaseUser {
   id: string;
   user: string;
   status: string;
-  actions: string;
   role: IUserRole;
 }
 
