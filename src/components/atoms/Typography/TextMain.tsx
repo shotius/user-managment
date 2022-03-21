@@ -4,7 +4,7 @@ import { FONT_DEFAULT, SEMI_BOLD } from 'src/utils/constants';
 interface TextMainProps {}
 
 export const TextMain: React.FC<TextMainProps & TextProps> = ({
-  color = '#26292E',
+  color = 'brandBlack.400',
   fontFamily =  FONT_DEFAULT ,
   fontWeight = SEMI_BOLD,
   children,

@@ -5,6 +5,7 @@ export const HeadingMain: React.FC<HeadingProps> = ({
   fontSize = '36px',
   fontWeight = BOLD,
   fontFamily = FONT_DEFAULT,
+  color = 'brandBlack.400',
   children,
   ...rest
 }) => {
@@ -13,6 +14,7 @@ export const HeadingMain: React.FC<HeadingProps> = ({
       fontFamily={fontFamily}
       fontSize={fontSize}
       fontWeight={fontWeight}
+      color={color}
       {...rest}
     >
       {children}

@@ -10,7 +10,7 @@ export const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
       w="70px"
       h="70px"
       borderRadius={'100px'}
-      bg={'#2A84FF'}
+      bg={'brandBlue.400'}
       color="white"
       top="-50%"
       left="0"
@@ -18,7 +18,6 @@ export const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
       fontSize="30px"
       fontWeight={'50'}
       _hover={{
-        background: "#2A84FF", 
         filter: "brightness(120%)"
       }}
       _active={{

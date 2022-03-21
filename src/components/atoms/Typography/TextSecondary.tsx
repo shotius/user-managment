@@ -4,7 +4,7 @@ interface TextSecondaryProps {}
 
 export const TextSecondary: React.FC<TextSecondaryProps & TextProps> = ({
   opacity = '0.6',
-  color = '#26292E',
+  color = 'brandBlack',
   fontSize = '14px',
   children,
   ...rest
