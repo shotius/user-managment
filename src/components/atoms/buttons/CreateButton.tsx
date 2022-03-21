@@ -3,7 +3,7 @@ import { Button, ButtonProps } from '@chakra-ui/react';
 interface CreateButtonProps {}
 
 export const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
-  ...rest
+  onClick, ...rest
 }) => {
   return (
     <Button

@@ -1,14 +1,26 @@
-import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useFlexLayout, useSortBy, useTable } from 'react-table';
+import {
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr
+} from '@chakra-ui/react';
+import { useFlexLayout, useRowSelect, useSortBy, useTable } from 'react-table';
 import { useUserTable } from './useUserTable';
 
 interface UserTableProps {}
 
 export const UserTable: React.FC<UserTableProps> = ({}) => {
-  const { data, columns } = useUserTable();
-
+  const { data, columns, getAdditionalColumns } = useUserTable();
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useFlexLayout, useSortBy);
+    useTable(
+      { columns, data },
+      useFlexLayout,
+      useSortBy,
+      useRowSelect,
+      getAdditionalColumns
+    );
 
   return (
     <Table {...getTableProps()}>

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
@@ -44,12 +45,6 @@ export const useUserTable = () => {
   const columns = useMemo<IUserTableColumn[]>(
     () => [
       {
-        accessor: 'id',
-        maxWidth: 70,
-        Header: () => <CreateButton />,
-        Cell: () => <UserProfileButton />,
-      },
-      {
         width: 450,
         Header: UserTableHeader,
         accessor: 'user',
@@ -74,5 +69,22 @@ export const useUserTable = () => {
     []
   );
 
-  return { data, columns };
+  const getAdditionalColumns = (hooks: Hooks<ExampleObject>) => {
+    hooks.visibleColumns.push((columns) => [
+      // Let's make a column for selection
+      {
+        id: 'selection',
+        maxWidth: 80,
+        Header: () => <CreateButton />,
+        // The cell can use the individual row's getToggleRowSelectedProps method
+        // to the render a checkbox
+        Cell: ({ row }) => {
+          return <UserProfileButton {...row.getToggleRowSelectedProps()} />;
+        },
+      },
+      ...columns,
+    ]);
+  };
+
+  return { data, columns, getAdditionalColumns };
 };
