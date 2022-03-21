@@ -14,7 +14,7 @@ export const useUserTable = () => {
     () => [
       {
         id: '1',
-        user: 'შოთიუს',
+        user: 'Levan',
         status: 'active',
         actions: 'action1 ',
         role: 'Admin',
@@ -30,7 +30,7 @@ export const useUserTable = () => {
       },
       {
         id: '3',
-        user: 'შოთიუს',
+        user: 'Giorgi',
         status: 'active',
         actions: 'action1 ',
         role: 'Admin',

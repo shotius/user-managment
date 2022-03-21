@@ -1,6 +1,5 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { useFlexLayout, useTable } from 'react-table';
-import { ExampleObject } from 'src/types';
+import { useFlexLayout, useSortBy, useTable } from 'react-table';
 import { useUserTable } from './useUserTable';
 
 interface UserTableProps {}
@@ -9,7 +8,7 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
   const { data, columns } = useUserTable();
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable<ExampleObject>({ columns, data }, useFlexLayout);
+    useTable({ columns, data }, useFlexLayout, useSortBy);
 
   return (
     <Table {...getTableProps()}>
@@ -18,15 +17,12 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
           return (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => {
-                console.log('heading props: ', column);
                 return (
                   <Th
-                    p="16px 0px"
+                    p="16px 4px"
                     border="none"
                     position="relative"
-                    {...column.getHeaderProps({
-                      style: { minWidth: '10px', width: 10 },
-                    })}
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
                     {column.render('Header')}
                   </Th>
