@@ -1,12 +1,15 @@
 import {
+  Box,
   Button,
   ButtonProps,
   Center,
   Divider,
   HStack,
   ModalHeader,
-  Switch, VStack
+  Switch,
+  VStack,
 } from '@chakra-ui/react';
+import { useMemo, useState } from 'react';
 import { ButtonPrimary } from '../atoms/buttons/ButtonPrimary';
 import { TextMain } from '../atoms/Typography/TextMain';
 import { TextSecondary } from '../atoms/Typography/TextSecondary';
@@ -20,13 +23,23 @@ interface UserSetupModalProps {
   onClose: () => void;
 }
 
-const SubmitButton = (props: ButtonProps) => (
-  <ButtonPrimary {...props}>Save Changes</ButtonPrimary>
-);
-
 export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
+  const [isActive, setIsActive] = useState(true);
+
+  // Submit button for user form
+  // it is button or null depenging on active state 
+  const SubmitButton = useMemo(
+    () => (props: ButtonProps) => {
+      if (isActive) {
+        return <ButtonPrimary {...props}>Save Changes</ButtonPrimary>;
+      } else {
+        return null;
+      }
+    },
+    [isActive]
+  );
   return (
-    <ModalWrapper {...props}>
+    <ModalWrapper {...props} opacity={isActive ? 1 : '0.5'}>
       <VStack p="0" align="start" spacing="0" pb="24px">
         <ModalHeader p="0">User Setup</ModalHeader>
         <TextSecondary>information and settings</TextSecondary>
@@ -56,6 +69,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
           </VStack>
         </HStack>
         <Button
+          display={isActive ? 'inline-block' : 'none'}
           colorScheme={'blue'}
           variant="ghost"
           w="full"
@@ -71,7 +85,12 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
             <TextMain fontSize="12px" opacity={'0.8'}>
               the user is <b>Active</b>
             </TextMain>
-            <Switch defaultChecked />
+            <Switch
+              defaultChecked
+              onChange={() => {
+                setIsActive((val) => !val);
+              }}
+            />
           </HStack>
         </HStack>
         {/* Edit user form  */}
