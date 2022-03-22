@@ -31,6 +31,7 @@ import { KeyIcon } from 'src/components/icons/KeyIcon';
 import { LetterIcon } from 'src/components/icons/LetterIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
 import { UserInvitationModal } from '../../modals/UserInvitationModal';
+import { UserDeleteModal } from '../../UserDeleteModal';
 import { UserSetupModal } from '../../UserSetupModal';
 import { useUserTable } from './useUserTable';
 
@@ -47,6 +48,8 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
     closeInviteModal,
     isUserSetupModalOpen,
     closeUserSetup,
+    isUserDeleteModalOpen,
+    closeUserDeleteModal,
   } = useUserTable();
 
   // react table variables
@@ -69,6 +72,10 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
         onClose={closeInviteModal}
       />
       <UserSetupModal isOpen={isUserSetupModalOpen} onClose={closeUserSetup} />
+      <UserDeleteModal
+        isOpen={isUserDeleteModalOpen}
+        onClose={closeUserDeleteModal}
+      />
       <VStack mb="120px" spacing="8">
         <Table {...getTableProps()}>
           <Thead>

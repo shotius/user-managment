@@ -14,6 +14,7 @@ import { UserTableHeader } from './cells/UserTableHeader';
 export const useUserTable = () => {
   const [userForSetup, setUserForSetup] = useState<ExampleObject | null>(null);
 
+  // modals
   const {
     isOpen: isInviteModalOpen,
     onOpen: openInviteModal,
@@ -26,6 +27,13 @@ export const useUserTable = () => {
     onClose: closeUserSetup,
   } = useDisclosure();
 
+  const {
+    isOpen: isUserDeleteModalOpen,
+    onOpen: openUserDeleteModal,
+    onClose: closeUserDeleteModal,
+  } = useDisclosure();
+
+  // user table data
   const data = useMemo<ExampleObject[]>(
     () => [
       {
@@ -124,6 +132,7 @@ export const useUserTable = () => {
               openUserSetup();
               setUserForSetup(props.row.original);
             }}
+            handleDeleteClick={openUserDeleteModal}
           />
         ),
       },
@@ -143,5 +152,8 @@ export const useUserTable = () => {
     closeUserSetup,
     userForSetup,
     setUserForSetup,
+    isUserDeleteModalOpen,
+    openUserDeleteModal,
+    closeUserDeleteModal,
   };
 };

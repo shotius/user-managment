@@ -1,15 +1,11 @@
 import {
-  Avatar,
-  Box,
   Button,
   ButtonProps,
   Center,
   Divider,
   HStack,
   ModalHeader,
-  Switch,
-  Text,
-  VStack,
+  Switch, VStack
 } from '@chakra-ui/react';
 import { ButtonPrimary } from '../atoms/buttons/ButtonPrimary';
 import { TextMain } from '../atoms/Typography/TextMain';
@@ -78,6 +74,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
             <Switch defaultChecked />
           </HStack>
         </HStack>
+        {/* Edit user form  */}
         <EditUserForm SubmitButton={SubmitButton} />
       </VStack>
     </ModalWrapper>

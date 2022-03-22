@@ -1,16 +1,16 @@
 import { HStack, IconButton } from '@chakra-ui/react';
-import { Cell } from 'react-table';
 import { SettingIcon } from 'src/components/icons/SettingIcon';
 import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
-import { ExampleObject } from 'src/types';
-import { useUserTable } from '../useUserTable';
 
 interface Props {
   handleSettingClick: () => void;
-  handleDeleteClick?: () => void;
+  handleDeleteClick: () => void;
 }
 
-export const UserActionsCell: React.FC<Props> = ({ handleSettingClick }) => {
+export const UserActionsCell: React.FC<Props> = ({
+  handleSettingClick,
+  handleDeleteClick,
+}) => {
   return (
     <HStack justify={'end'}>
       <IconButton
@@ -20,7 +20,12 @@ export const UserActionsCell: React.FC<Props> = ({ handleSettingClick }) => {
         size={'lg'}
         onClick={handleSettingClick}
       />
-      <IconButton icon={<TrashBinIcon />} aria-label="deleteUser" bg="white" />
+      <IconButton
+        icon={<TrashBinIcon />}
+        aria-label="deleteUser"
+        bg="white"
+        onClick={handleDeleteClick}
+      />
     </HStack>
   );
 };
