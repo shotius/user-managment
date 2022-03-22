@@ -31,11 +31,13 @@ import { KeyIcon } from 'src/components/icons/KeyIcon';
 import { LetterIcon } from 'src/components/icons/LetterIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
 import { UserInvitationModal } from '../../modals/UserInvitationModal';
+import { UserSetupModal } from '../../UserSetupModal';
 import { useUserTable } from './useUserTable';
 
 interface UserTableProps {}
 
 export const UserTable: React.FC<UserTableProps> = ({}) => {
+  // component variables
   const {
     data,
     columns,
@@ -43,7 +45,11 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
     checkIfActive,
     isInviteModalOpen,
     closeInviteModal,
+    isUserSetupModalOpen,
+    closeUserSetup,
   } = useUserTable();
+
+  // react table variables
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
@@ -56,13 +62,13 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
       getAdditionalColumns
     );
 
-  console.log('isMOdal open: ', isInviteModalOpen);
   return (
     <>
       <UserInvitationModal
         isOpen={isInviteModalOpen}
         onClose={closeInviteModal}
       />
+      <UserSetupModal isOpen={isUserSetupModalOpen} onClose={closeUserSetup} />
       <VStack mb="120px" spacing="8">
         <Table {...getTableProps()}>
           <Thead>

@@ -11,6 +11,7 @@ export const ButtonPrimary: React.FC<ButtonPrimaryProps & ButtonProps> = ({
   mt = '24px',
   p = '16px',
   lineHeight = '24px',
+  fontWeight = 'light',
   ...rest
 }) => {
   return (
@@ -18,14 +19,15 @@ export const ButtonPrimary: React.FC<ButtonPrimaryProps & ButtonProps> = ({
       bg={bg}
       _hover={{
         background: bg,
-        filter: 'brightness(120%)'
+        filter: 'brightness(120%)',
       }}
       _active={{
-        filter: 'brightness(100%)'
+        filter: 'brightness(100%)',
       }}
       color={color}
       w={w}
       borderRadius={borderRadius}
+      fontWeight={fontWeight}
       mt={mt}
       p={p}
       lineHeight={lineHeight}

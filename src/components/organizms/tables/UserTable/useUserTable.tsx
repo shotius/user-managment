@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { ExampleObject, IUserTableColumn } from 'src/types';
@@ -12,10 +12,18 @@ import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
+  const [userForSetup, setUserForSetup] = useState<ExampleObject | null>(null);
+
   const {
     isOpen: isInviteModalOpen,
     onOpen: openInviteModal,
     onClose: closeInviteModal,
+  } = useDisclosure();
+
+  const {
+    isOpen: isUserSetupModalOpen,
+    onOpen: openUserSetup,
+    onClose: closeUserSetup,
   } = useDisclosure();
 
   const data = useMemo<ExampleObject[]>(
@@ -82,6 +90,16 @@ export const useUserTable = () => {
     []
   );
 
+  const checkIfActive = (cell: Cell<ExampleObject, any>) => {
+    const {
+      row: {
+        original: { status },
+      },
+    } = cell;
+    return status === 'active';
+  };
+
+  // adding some columns to the table
   const getAdditionalColumns = (hooks: Hooks<ExampleObject>) => {
     hooks.visibleColumns.push((columns) => [
       // Let's make a column for selection
@@ -100,18 +118,16 @@ export const useUserTable = () => {
       {
         id: 'actions',
         Header: UserActionHeaderCell,
-        Cell: UserActionsCell,
+        Cell: (props: Cell<ExampleObject>) => (
+          <UserActionsCell
+            handleSettingClick={() => {
+              openUserSetup();
+              setUserForSetup(props.row.original);
+            }}
+          />
+        ),
       },
     ]);
-  };
-
-  const checkIfActive = (cell: Cell<ExampleObject, any>) => {
-    const {
-      row: {
-        original: { status },
-      },
-    } = cell;
-    return status === 'active';
   };
 
   return {
@@ -122,5 +138,10 @@ export const useUserTable = () => {
     closeInviteModal,
     getAdditionalColumns,
     checkIfActive,
+    isUserSetupModalOpen,
+    openUserSetup,
+    closeUserSetup,
+    userForSetup,
+    setUserForSetup,
   };
 };
