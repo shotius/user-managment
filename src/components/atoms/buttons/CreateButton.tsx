@@ -3,7 +3,7 @@ import { Button, ButtonProps } from '@chakra-ui/react';
 interface CreateButtonProps {}
 
 export const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
-  onClick, ...rest
+  ...rest
 }) => {
   return (
     <Button
@@ -18,10 +18,10 @@ export const CreateButton: React.FC<CreateButtonProps & ButtonProps> = ({
       fontSize="30px"
       fontWeight={'50'}
       _hover={{
-        filter: "brightness(120%)"
+        filter: 'brightness(120%)',
       }}
       _active={{
-        filter: "brightness(100%)", 
+        filter: 'brightness(100%)',
       }}
       {...rest}
     >

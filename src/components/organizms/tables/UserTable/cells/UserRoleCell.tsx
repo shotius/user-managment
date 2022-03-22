@@ -7,7 +7,9 @@ export const UserRoleCell: any = ({ row: { original } }) => (
   <CenterVerticaly>
     <HStack>
       <TextMain>{original.role}</TextMain>
-      {original.role === 'Admin' ? <Icon as={KeyIcon} /> : null}
+      {original.role === 'Admin' ? (
+        <Icon as={KeyIcon} stroke="brandBlue.400" />
+      ) : null}
     </HStack>
   </CenterVerticaly>
 );

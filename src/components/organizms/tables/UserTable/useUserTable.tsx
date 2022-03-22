@@ -1,3 +1,4 @@
+import { useDisclosure } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
@@ -11,6 +12,12 @@ import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
+  const {
+    isOpen: isInviteModalOpen,
+    onOpen: openInviteModal,
+    onClose: closeInviteModal,
+  } = useDisclosure();
+
   const data = useMemo<ExampleObject[]>(
     () => [
       {
@@ -81,7 +88,7 @@ export const useUserTable = () => {
       {
         id: 'selection',
         maxWidth: 80,
-        Header: () => <CreateButton />,
+        Header: () => <CreateButton onClick={openInviteModal} />,
         // The cell can use the individual row's getToggleRowSelectedProps method
         // to the render a checkbox
         Cell: ({ row }) => {
@@ -107,5 +114,13 @@ export const useUserTable = () => {
     return status === 'active';
   };
 
-  return { data, columns, getAdditionalColumns, checkIfActive };
+  return {
+    data,
+    columns,
+    isInviteModalOpen,
+    openInviteModal,
+    closeInviteModal,
+    getAdditionalColumns,
+    checkIfActive,
+  };
 };

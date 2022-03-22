@@ -9,6 +9,7 @@ export const theme = extendTheme({
       400: "#2A84FF",
     },
     brandBlack: {
+      100: "rgba(38, 41, 46, 0.1)", 
       400: "#26292E"
     }
   },
