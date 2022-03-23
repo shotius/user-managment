@@ -23,3 +23,6 @@ export type ThProps = ComponentProps<typeof Th>;
 export interface IUserTableColumn {
   Header: any;
 }
+
+
+export type IFormUser  = Pick<ExampleObject, "email" | "role" | "user">

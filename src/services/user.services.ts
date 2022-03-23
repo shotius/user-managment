@@ -1,14 +1,20 @@
+import { ExampleObject } from 'src/types';
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:3001/users';
 
 const getUsers = async () => {
   const { data } = await axios.get(baseUrl);
-  return data;
+  return data as ExampleObject[];
 };
 
-const userService = {
+const addUser = async(newUser: ExampleObject) => {
+  const {data} = await axios.post(baseUrl, newUser)
+  return data as ExampleObject
+}
+
+export const userService = {
   getUsers,
+  addUser
 };
 
-export default userService;

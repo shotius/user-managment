@@ -1,9 +1,9 @@
-import { useDisclosure } from '@chakra-ui/react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
-import userService from 'src/services/user.services';
+import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
+import { getUsers, selectUser } from 'src/redux/features/users/usersSlice';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -15,11 +15,12 @@ import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
   const [userForSetup, setUserForSetup] = useState<ExampleObject | null>(null);
-  const [users, setUsers] = useState<ExampleObject[]>([]);
+  const users = useAppSelector(selectUser)
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    userService.getUsers().then(setUsers);
+    dispatch(getUsers(''))
   }, []);
 
   // user table data
@@ -79,7 +80,7 @@ export const useUserTable = () => {
         Cell: (props: Cell<ExampleObject>) => (
           <UserActionsCell
             handleSettingClick={() => {
-              navigate('/setup-user')
+              navigate('/setup-user');
               setUserForSetup(props.row.original);
             }}
             handleDeleteClick={() => navigate('/delete-user')}

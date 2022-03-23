@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
 
 import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
-import { EditUserForm } from 'src/components/molecules/EditUserForm';
+import { EditUserForm } from 'src/components/molecules/forms/EditUserForm';
 import { ModalWrapper } from 'src/components/molecules/modals/ModalWrapper';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {

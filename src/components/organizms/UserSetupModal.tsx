@@ -21,7 +21,7 @@ import { TextMain } from '../atoms/Typography/TextMain';
 import { TextSecondary } from '../atoms/Typography/TextSecondary';
 import { KeyIcon } from '../icons/KeyIcon';
 import { UserProfileIcon } from '../icons/UserProfileIcon';
-import { EditUserForm } from '../molecules/EditUserForm';
+import { EditUserForm } from '../molecules/forms/EditUserForm';
 import { ModalWrapper } from '../molecules/modals/ModalWrapper';
 
 interface UserSetupModalProps {}
