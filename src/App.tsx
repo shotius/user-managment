@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import { UserInvitationModal } from './components/organizms/modals/UserInvitationModal';
-import { UserDeleteModal } from './components/organizms/UserDeleteModal';
-import { UserSetupModal } from './components/organizms/UserSetupModal';
+import { UserDeleteModal } from './components/organizms/modals/UserDeleteModal/UserDeleteModal';
+import { UserSetupModal } from './components/organizms/modals/UserSetupModal/UserSetupModal';
 import { UserListPage } from './pages/UserListPage';
+import { UserInvitationModal } from './components/organizms/modals/UserInviteModal/UserInvitationModal';
 
 function App() {
   return (

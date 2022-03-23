@@ -7,9 +7,9 @@ import {
   openUserDeleteModal,
   selectUserDeleteModal,
 } from 'src/redux/features/modals/modalsSlice';
-import { TextMain } from '../atoms/Typography/TextMain';
-import { UserProfileIcon } from '../icons/UserProfileIcon';
-import { ModalWrapper } from '../molecules/modals/ModalWrapper';
+import { TextMain } from '../../../atoms/Typography/TextMain';
+import { UserProfileIcon } from '../../../icons/UserProfileIcon';
+import { ModalWrapper } from '../../../molecules/modals/ModalWrapper';
 
 interface UserDeleteModalProps {}
 

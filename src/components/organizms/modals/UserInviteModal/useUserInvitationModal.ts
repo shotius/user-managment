@@ -9,7 +9,7 @@ import {
   selectInviteModal,
 } from 'src/redux/features/modals/modalsSlice';
 import { ExampleObject, IFormUser } from 'src/types';
-import { addUser } from './../../../redux/features/users/usersSlice';
+import { addUser } from 'src/redux/features/users/usersSlice';
 
 export const useUserInvitationModal = () => {
   const dispatch = useAppDispatch();

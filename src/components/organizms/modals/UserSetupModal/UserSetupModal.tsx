@@ -1,6 +1,5 @@
 import {
   Button,
-  ButtonProps,
   Center,
   Divider,
   HStack,
@@ -8,62 +7,25 @@ import {
   Switch,
   VStack,
 } from '@chakra-ui/react';
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import {
-  closeUserSetupModal,
-  openUserSetupModal,
-  selectUserSetupModal,
-} from 'src/redux/features/modals/modalsSlice';
-import { ButtonPrimary } from '../atoms/buttons/ButtonPrimary';
-import { TextMain } from '../atoms/Typography/TextMain';
-import { TextSecondary } from '../atoms/Typography/TextSecondary';
-import { KeyIcon } from '../icons/KeyIcon';
-import { UserProfileIcon } from '../icons/UserProfileIcon';
-import { FormUserEdit } from '../molecules/forms/FormUserEdit';
-import { useUserEditForm } from '../molecules/forms/useUserEditForm';
-import { ModalWrapper } from '../molecules/modals/ModalWrapper';
+import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
+import { TextMain } from 'src/components/atoms/Typography/TextMain';
+import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
+import { KeyIcon } from 'src/components/icons/KeyIcon';
+import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
+import { FormUserEdit } from 'src/components/molecules/forms/FormUserEdit';
+import { ModalWrapper } from 'src/components/molecules/modals/ModalWrapper';
+import { useUserSetupModal } from './useUserSetupModal';
 
 interface UserSetupModalProps {}
 
 export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
-  const [isActive, setIsActive] = useState(true);
-
-  const isOpen = useAppSelector(selectUserSetupModal);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const onOpen = () => dispatch(openUserSetupModal());
-  const onClose = () => {
-    dispatch(closeUserSetupModal());
-    navigate('/');
-  };
-
-  useEffect(() => {
-    onOpen();
-  }, []);
-
-  // Submit button for user form
-  // it is button or null depenging on active state
-  const SubmitButton = useMemo(
-    () => (props: ButtonProps) => {
-      if (isActive) {
-        return <ButtonPrimary {...props}>Save Changes</ButtonPrimary>;
-      } else {
-        return null;
-      }
-    },
-    [isActive]
-  );
-
-  const formProps = useUserEditForm();
+  const { isOpen, onClose, isActive, setIsActive, ...formProps } =
+    useUserSetupModal();
 
   return (
     <ModalWrapper
       isOpen={isOpen}
       onClose={onClose}
-      opacity={isActive ? 1 : '0.5'}
     >
       <VStack p="0" align="start" spacing="0" pb="24px">
         <ModalHeader p="0">User Setup</ModalHeader>
@@ -75,6 +37,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
         borderRadius="12px"
         borderColor={'brandBlack.100'}
         p="4"
+        opacity={isActive ? 1 : '0.5'}
       >
         <HStack w="full" spacing="4">
           <Center
@@ -119,7 +82,18 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
           </HStack>
         </HStack>
         {/* Edit user form  */}
-        {/* <FormUserEdit SubmitButton={SubmitButton} {...formProps}/> */}
+        <FormUserEdit
+          {...formProps}
+          submitButton={
+            <ButtonPrimary
+              display={isActive ? 'inline-flex' : 'none'}
+              type="submit"
+              isLoading={formProps.isSubmitting}
+            >
+              Save Changes
+            </ButtonPrimary>
+          }
+        />
       </VStack>
     </ModalWrapper>
   );

@@ -1,7 +1,6 @@
 import { VStack } from '@chakra-ui/react';
 import { FormEventHandler } from 'react';
 import { useForm } from 'react-hook-form';
-import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
 import { InputOutLineWithIcon } from 'src/components/atoms/Input/InputOutLineWithIcon';
 import { KeyIcon } from 'src/components/icons/KeyIcon';
 import { LetterIcon } from 'src/components/icons/LetterIcon';
@@ -9,19 +8,17 @@ import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
 import { SelectWithIcon } from '../selects/SelectWithIcon';
 
 interface FormUserEditProps {
-  submitButtonText: string;
+  submitButton: React.ReactElement;
   onSubmit: FormEventHandler<HTMLFormElement>;
   register: any;
   errors: ReturnType<typeof useForm>['formState']['errors'];
-  isSubmitting: ReturnType<typeof useForm>['formState']['isSubmitting'];
 }
 
 export const FormUserEdit: React.FC<FormUserEditProps> = ({
-  submitButtonText,
+  submitButton,
   onSubmit,
   register,
   errors,
-  isSubmitting,
 }) => {
   return (
     <form className="edit-user-form" onSubmit={onSubmit}>
@@ -48,9 +45,7 @@ export const FormUserEdit: React.FC<FormUserEditProps> = ({
           <option value={'admin'}>Admin</option>
         </SelectWithIcon>
       </VStack>
-      <ButtonPrimary type="submit" isLoading={isSubmitting}>
-        {submitButtonText}
-      </ButtonPrimary>
+      {submitButton}
     </form>
   );
 };
