@@ -47,7 +47,6 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     // Get Users
     builder.addCase(getUsers.fulfilled, (state, action) => {
-      console.log('in reducer');
       state.users = action.payload;
     });
 

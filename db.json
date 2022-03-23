@@ -1,28 +1,21 @@
 {
   "users": [
     {
-      "id": "1",
-      "user": "G",
+      "id": "9Jr7M035oOSKXLfXQqNFx",
       "status": "active",
-      "role": "Admin",
-      "email": "sh.archemashvili@gmail.com"
+      "user": "Shotius",
+      "email": "sh.archemashvili@gmail.com",
+      "role": "admin"
     },
     {
-      "id": "dR6VyQJqkXv79Rq5fNyxn",
+      "id": "m4uyBBiBNGNc6ZfDcjiQW",
       "status": "active",
-      "user": "shotius",
+      "user": "Levan",
       "email": "sh.archemashvili@gmail.com",
       "role": "user"
     },
     {
-      "id": "Wn44OfMgSOaImB0EC9lp5",
-      "status": "active",
-      "user": "asdf",
-      "email": "sh.archemashvili@gmail.com",
-      "role": "user"
-    },
-    {
-      "id": "d8nxUV5yp08BfYH2Ud13X",
+      "id": "tSNb4rsw_cIysFhxI-jfb",
       "status": "active",
       "user": "Yuhuuu",
       "email": "carspace77@gmail.com",

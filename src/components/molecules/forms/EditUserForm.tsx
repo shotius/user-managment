@@ -1,18 +1,28 @@
-import { ButtonProps, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import { FormEventHandler } from 'react';
+import { useForm } from 'react-hook-form';
+import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
 import { InputOutLineWithIcon } from 'src/components/atoms/Input/InputOutLineWithIcon';
 import { KeyIcon } from 'src/components/icons/KeyIcon';
 import { LetterIcon } from 'src/components/icons/LetterIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
 import { SelectWithIcon } from '../selects/SelectWithIcon';
-import { useEditUserForm } from './useEditUserForm';
 
 interface EditUserFormProps {
-  SubmitButton: React.FC<ButtonProps>;
+  submitButtonText: string;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  register: any;
+  errors: ReturnType<typeof useForm>['formState']['errors'];
+  isSubmitting: ReturnType<typeof useForm>['formState']['isSubmitting'];
 }
 
-export const EditUserForm: React.FC<EditUserFormProps> = ({ SubmitButton }) => {
-  const { register, errors, onSubmit, isSubmitting } = useEditUserForm();
-
+export const EditUserForm: React.FC<EditUserFormProps> = ({
+  submitButtonText,
+  onSubmit,
+  register,
+  errors,
+  isSubmitting,
+}) => {
   return (
     <form className="edit-user-form" onSubmit={onSubmit}>
       <VStack>
@@ -38,7 +48,9 @@ export const EditUserForm: React.FC<EditUserFormProps> = ({ SubmitButton }) => {
           <option value={'admin'}>Admin</option>
         </SelectWithIcon>
       </VStack>
-      <SubmitButton type="submit" isLoading={isSubmitting} />
+      <ButtonPrimary type="submit" isLoading={isSubmitting}>
+        {submitButtonText}
+      </ButtonPrimary>
     </form>
   );
 };

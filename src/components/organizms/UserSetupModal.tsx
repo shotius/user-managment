@@ -22,6 +22,7 @@ import { TextSecondary } from '../atoms/Typography/TextSecondary';
 import { KeyIcon } from '../icons/KeyIcon';
 import { UserProfileIcon } from '../icons/UserProfileIcon';
 import { EditUserForm } from '../molecules/forms/EditUserForm';
+import { useEditUserForm } from '../molecules/forms/useEditUserForm';
 import { ModalWrapper } from '../molecules/modals/ModalWrapper';
 
 interface UserSetupModalProps {}
@@ -55,6 +56,8 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
     },
     [isActive]
   );
+
+  const formProps = useEditUserForm();
 
   return (
     <ModalWrapper
@@ -116,7 +119,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
           </HStack>
         </HStack>
         {/* Edit user form  */}
-        <EditUserForm SubmitButton={SubmitButton} />
+        {/* <EditUserForm SubmitButton={SubmitButton} {...formProps}/> */}
       </VStack>
     </ModalWrapper>
   );
