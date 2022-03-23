@@ -1,8 +1,7 @@
 import {
   createAsyncThunk,
   createSlice,
-  PayloadAction,
-  nanoid,
+  PayloadAction
 } from '@reduxjs/toolkit';
 import { userService } from 'src/services/user.services';
 import { ExampleObject } from 'src/types';

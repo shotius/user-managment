@@ -5,7 +5,7 @@ import {
   HStack,
   ModalHeader,
   Switch,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
@@ -22,11 +22,16 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
   const {
     isOpen,
     onClose,
-    isActive, 
+    isActive,
     userForSetup,
     handleToggleStatus,
     ...formProps
   } = useUserSetupModal();
+
+  if (!userForSetup) {
+    onClose();
+    return null;
+  }
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose}>
@@ -81,9 +86,8 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
               the user is <b>Active</b>
             </TextMain>
             <Switch
-              defaultChecked
               isChecked={userForSetup?.status === 'active'}
-              onChange={handleToggleStatus}
+              onChange={() => handleToggleStatus(userForSetup)}
             />
           </HStack>
         </HStack>

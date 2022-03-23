@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FieldArrayPath, FieldValue, useForm, UseFormReturn } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { ExampleObject } from 'src/types';
 import { editUserSchema } from './validationSchema';
 

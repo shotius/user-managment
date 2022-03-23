@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import { getUsers, setUserForSetup } from 'src/redux/features/users/usersSlice';
+import {
+  getUsers,
+  setUserForSetup,
+  updateUser,
+} from 'src/redux/features/users/usersSlice';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -52,13 +56,25 @@ export const useUserTable = () => {
     []
   );
 
-  const checkIfActive = (cell: Cell<ExampleObject, any>) => {
+  function handleError(error: unknown) {
+    console.log('unhandled error: ', error);
+  }
+
+  function handleToggleStatus(user: ExampleObject) {
+    const toggledObj: ExampleObject = {
+      ...user,
+      status: user.status === 'active' ? 'inactive' : 'active',
+    };
+    dispatch(updateUser(toggledObj)).catch(handleError);
+  }
+
+  function checkIfActive(cell: Cell<ExampleObject, any>) {
     const status = cell.row.original.status;
     return status === 'active';
-  };
+  }
 
   // adding some columns to the table
-  const getAdditionalColumns = (hooks: Hooks<ExampleObject>) => {
+  function getAdditionalColumns(hooks: Hooks<ExampleObject>) {
     hooks.visibleColumns.push((columns) => [
       // Let's make a column for selection
       {
@@ -87,12 +103,13 @@ export const useUserTable = () => {
         ),
       },
     ]);
-  };
+  }
 
   return {
     data,
     columns,
     getAdditionalColumns,
     checkIfActive,
+    handleToggleStatus,
   };
 };

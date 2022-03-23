@@ -1,3 +1,4 @@
+import { useUserTable } from './../../tables/UserTable/useUserTable';
 import { updateUser } from './../../../../redux/features/users/usersSlice';
 import { ExampleObject } from 'src/types';
 import { useUserEditForm } from 'src/components/molecules/forms/useUserEditForm';
@@ -17,7 +18,7 @@ export const useUserSetupModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isActive = userForSetup?.status === "active"
+  const isActive = userForSetup?.status === 'active';
 
   // Open Modal on Page load
   useEffect(() => {
@@ -33,6 +34,8 @@ export const useUserSetupModal = () => {
     useUserEditForm({
       defaultValues: userForSetup,
     });
+
+  const { handleToggleStatus } = useUserTable();
 
   function onOpen() {
     dispatch(openUserSetupModal());
@@ -53,16 +56,7 @@ export const useUserSetupModal = () => {
   }
 
   function handleError(error: unknown) {
-    console.log(error);
-  }
-
-  function handleToggleStatus() {
-    if (!userForSetup) return;
-    const updatedUser: ExampleObject = {
-      ...userForSetup,
-      status: userForSetup.status === 'active' ? 'inactive' : 'active',
-    };
-    dispatch(updateUser(updatedUser)).catch(handleError);
+    console.log('unhandled error: ', error);
   }
 
   const onSubmit = handleSubmit((data: ExampleObject) => {
