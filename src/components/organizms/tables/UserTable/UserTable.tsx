@@ -1,35 +1,21 @@
 import {
   HStack,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Select,
   Table,
   Tbody,
   Td,
   Th,
-  Input,
   Thead,
   Tr,
   VStack,
-  InputGroup,
-  InputLeftElement,
-  Button,
-  ModalFooter,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useFlexLayout, useRowSelect, useSortBy, useTable } from 'react-table';
 import { ButtonIconRound } from 'src/components/atoms/buttons/ButtonIconRound';
 import { ButtonPagin } from 'src/components/atoms/buttons/PaginButton';
-import { InputOutLineWithIcon } from 'src/components/atoms/Input/InputOutLineWithIcon';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
-import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
 import { DropdownIcon } from 'src/components/icons/DropdownIcon';
-import { KeyIcon } from 'src/components/icons/KeyIcon';
-import { LetterIcon } from 'src/components/icons/LetterIcon';
-import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
+import userService from 'src/services/user.services';
 import { UserInvitationModal } from '../../modals/UserInvitationModal';
 import { UserDeleteModal } from '../../UserDeleteModal';
 import { UserSetupModal } from '../../UserSetupModal';
@@ -117,6 +103,7 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
             })}
           </Tbody>
         </Table>
+        {/* Pagination  */}
         <HStack w="full" justify="space-between">
           <HStack w="220px" justify="space-between">
             <TextMain wordBreak={'keep-all'}>Records on page</TextMain>

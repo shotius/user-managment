@@ -1,7 +1,9 @@
 import { useDisclosure } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
+import userService from 'src/services/user.services';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -13,6 +15,8 @@ import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
   const [userForSetup, setUserForSetup] = useState<ExampleObject | null>(null);
+  const [users, setUsers] = useState<ExampleObject[]>([]);
+  const navigate = useNavigate();
 
   // modals
   const {
@@ -33,47 +37,12 @@ export const useUserTable = () => {
     onClose: closeUserDeleteModal,
   } = useDisclosure();
 
+  useEffect(() => {
+    userService.getUsers().then(setUsers);
+  }, []);
+
   // user table data
-  const data = useMemo<ExampleObject[]>(
-    () => [
-      {
-        id: '1',
-        user: 'G',
-        status: 'active',
-        role: 'Admin',
-        email: 'sh.archemashvili@gmail.com',
-      },
-      {
-        id: '2',
-        user: 'D',
-        status: 'active',
-        role: 'User',
-        email: 'sh.archemashvili@gmail.com',
-      },
-      {
-        id: '3',
-        user: 'Z',
-        status: 'active',
-        role: 'Admin',
-        email: 'sh.archemashvili@gmail.com',
-      },
-      {
-        id: '4',
-        user: 'B',
-        status: 'disabled',
-        role: 'Admin',
-        email: 'sh.archemashvili@gmail.com',
-      },
-      {
-        id: '5',
-        user: 'A',
-        status: 'active',
-        role: 'Admin',
-        email: 'sh.archemashvili@gmail.com',
-      },
-    ],
-    []
-  );
+  const data = useMemo<ExampleObject[]>(() => users, [users]);
 
   // create collumns
   const columns = useMemo<IUserTableColumn[]>(
@@ -114,7 +83,7 @@ export const useUserTable = () => {
       {
         id: 'selection',
         maxWidth: 80,
-        Header: () => <CreateButton onClick={openInviteModal} />,
+        Header: () => <CreateButton onClick={() => navigate('/invite-user')} />,
         // The cell can use the individual row's getToggleRowSelectedProps method
         // to the render a checkbox
         Cell: ({ row }) => {

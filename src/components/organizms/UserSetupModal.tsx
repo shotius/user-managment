@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   ButtonProps,
   Center,
@@ -27,7 +26,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
   const [isActive, setIsActive] = useState(true);
 
   // Submit button for user form
-  // it is button or null depenging on active state 
+  // it is button or null depenging on active state
   const SubmitButton = useMemo(
     () => (props: ButtonProps) => {
       if (isActive) {
@@ -38,6 +37,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
     },
     [isActive]
   );
+
   return (
     <ModalWrapper {...props} opacity={isActive ? 1 : '0.5'}>
       <VStack p="0" align="start" spacing="0" pb="24px">

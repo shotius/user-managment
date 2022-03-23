@@ -1,9 +1,39 @@
 {
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
-  ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+  "users": [
+    {
+      "id": "1",
+      "user": "G",
+      "status": "active",
+      "role": "Admin",
+      "email": "sh.archemashvili@gmail.com"
+    },
+    {
+      "id": "2",
+      "user": "D",
+      "status": "active",
+      "role": "User",
+      "email": "sh.archemashvili@gmail.com"
+    },
+    {
+      "id": "3",
+      "user": "Z",
+      "status": "active",
+      "role": "Admin",
+      "email": "sh.archemashvili@gmail.com"
+    },
+    {
+      "id": "4",
+      "user": "B",
+      "status": "disabled",
+      "role": "Admin",
+      "email": "sh.archemashvili@gmail.com"
+    },
+    {
+      "id": "5",
+      "user": "A",
+      "status": "active",
+      "role": "Admin",
+      "email": "sh.archemashvili@gmail.com"
+    }
+  ]
 }

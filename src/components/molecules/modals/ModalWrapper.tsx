@@ -25,6 +25,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps & ModalBodyProps> = ({
       <ModalContent p={'24px 32px 48px'} borderRadius={'32px'} maxW={maxW}>
         <ModalCloseButton
           borderRadius={'100px'}
+          zIndex="banner"
           mt="18px"
           mr="32px"
           border="1px solid"
