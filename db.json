@@ -2,10 +2,10 @@
   "users": [
     {
       "id": "9Jr7M035oOSKXLfXQqNFx",
-      "status": "active",
-      "user": "Shotius",
-      "email": "sh.archemashvili@gmail.com",
-      "role": "admin"
+      "user": "Tesing",
+      "status": "inactive",
+      "role": "Admin",
+      "email": "New"
     },
     {
       "id": "m4uyBBiBNGNc6ZfDcjiQW",

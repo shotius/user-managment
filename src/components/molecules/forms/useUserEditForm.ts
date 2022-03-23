@@ -1,15 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { FieldArrayPath, FieldValue, useForm, UseFormReturn } from 'react-hook-form';
 import { ExampleObject } from 'src/types';
 import { editUserSchema } from './validationSchema';
 
-export const useUserEditForm = () => {
+type FormProps = Parameters<typeof useForm>[0];
+
+export const useUserEditForm = (props: FormProps | void) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ExampleObject>({
+    ...props,
     resolver: yupResolver(editUserSchema),
   });
 

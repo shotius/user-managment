@@ -1,10 +1,11 @@
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { userService } from 'src/services/user.services';
 import { ExampleObject } from 'src/types';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 interface UsersState {
   users: ExampleObject[];
+  selectedUser?: ExampleObject;
 }
 
 const initialState: UsersState = {
@@ -14,7 +15,7 @@ const initialState: UsersState = {
 // Get users
 export const getUsers = createAsyncThunk<
   ExampleObject[],
-  any,
+  void,
   { rejectValue: string }
 >('users/getUsers', async (_, { rejectWithValue }) => {
   try {
@@ -43,7 +44,11 @@ export const addUser = createAsyncThunk<
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserForSetup: (state, action: PayloadAction<ExampleObject | undefined>) => {
+      state.selectedUser = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // Get Users
     builder.addCase(getUsers.fulfilled, (state, action) => {
@@ -57,7 +62,7 @@ export const usersSlice = createSlice({
   },
 });
 
-export const {} = usersSlice.actions;
+export const { setUserForSetup } = usersSlice.actions;
 
 // Selectors
 export const selectUser = (state: RootState) => state.users.users;

@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import { getUsers, selectUser } from 'src/redux/features/users/usersSlice';
+import {
+  getUsers, setUserForSetup
+} from 'src/redux/features/users/usersSlice';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -14,14 +16,15 @@ import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
-  const [userForSetup, setUserForSetup] = useState<ExampleObject | null>(null);
-  const users  = useAppSelector(selectUser);
+  const users = useAppSelector(state => state.users.users);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const selectUser = (data: ExampleObject) =>  dispatch(setUserForSetup(data));
+
   useEffect(() => {
     if (!users.length) {
-      dispatch(getUsers(''));
+      dispatch(getUsers());
     }
   }, []);
 
@@ -82,8 +85,8 @@ export const useUserTable = () => {
         Cell: (props: Cell<ExampleObject>) => (
           <UserActionsCell
             handleSettingClick={() => {
+              selectUser(props.row.original)
               navigate('/setup-user');
-              setUserForSetup(props.row.original);
             }}
             handleDeleteClick={() => navigate('/delete-user')}
           />
@@ -97,7 +100,5 @@ export const useUserTable = () => {
     columns,
     getAdditionalColumns,
     checkIfActive,
-    userForSetup,
-    setUserForSetup,
   };
 };

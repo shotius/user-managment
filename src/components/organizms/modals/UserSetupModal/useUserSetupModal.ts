@@ -8,30 +8,41 @@ import {
   openUserSetupModal,
   selectUserSetupModal,
 } from 'src/redux/features/modals/modalsSlice';
+import { setUserForSetup } from 'src/redux/features/users/usersSlice';
 
 export const useUserSetupModal = () => {
   const [isActive, setIsActive] = useState(true);
-
+  const userForSetup = useAppSelector(state => state.users.selectedUser)
   const isOpen = useAppSelector(selectUserSetupModal);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { handleSubmit, reset, isSubmitting, errors, register } = useUserEditForm();
+
+  const { handleSubmit, reset, isSubmitting, errors, register } =
+    useUserEditForm({
+      defaultValues: userForSetup,
+    });
 
   const onOpen = () => dispatch(openUserSetupModal());
 
+  const closeModal = () => dispatch(closeUserSetupModal());
+
+  const removeSelectedUser = () => dispatch(setUserForSetup(undefined));
+
   const onClose = () => {
-    dispatch(closeUserSetupModal());
+    closeModal();
+    removeSelectedUser();
     navigate('/');
   };
-
-  useEffect(() => {
-    onOpen();
-  }, []);
 
   const onSubmit = handleSubmit((data: ExampleObject) => {
     console.log('data: ', data);
     reset();
   });
+
+  // Open Modal on Page load
+  useEffect(() => {
+    onOpen();
+  }, []);
 
   return {
     isOpen,
@@ -40,7 +51,7 @@ export const useUserSetupModal = () => {
     setIsActive,
     isSubmitting,
     errors,
-    onSubmit, 
-    register
+    onSubmit,
+    register,
   };
 };
