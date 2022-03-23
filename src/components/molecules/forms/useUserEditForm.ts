@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ExampleObject } from 'src/types';
 import { editUserSchema } from './validationSchema';
 
-export const useEditUserForm = () => {
+export const useUserEditForm = () => {
   const {
     register,
     handleSubmit,

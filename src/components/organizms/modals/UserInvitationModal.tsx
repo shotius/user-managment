@@ -1,6 +1,6 @@
 import { ModalHeader, VStack } from '@chakra-ui/react';
 import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
-import { EditUserForm } from 'src/components/molecules/forms/EditUserForm';
+import { FormUserEdit } from 'src/components/molecules/forms/FormUserEdit';
 import { ModalWrapper } from 'src/components/molecules/modals/ModalWrapper';
 import { useUserInvitationModal } from './useUserInvitationModal';
 
@@ -15,7 +15,7 @@ export const UserInvitationModal: React.FC<UserInvitationModal> = () => {
         <ModalHeader p="0">Invite new user</ModalHeader>
         <TextSecondary>Fill in all the fields</TextSecondary>
       </VStack>
-      <EditUserForm submitButtonText="Send Invitation" {...props} />
+      <FormUserEdit submitButtonText="Send Invitation" {...props} />
     </ModalWrapper>
   );
 };

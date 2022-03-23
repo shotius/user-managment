@@ -8,7 +8,7 @@ import { LetterIcon } from 'src/components/icons/LetterIcon';
 import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
 import { SelectWithIcon } from '../selects/SelectWithIcon';
 
-interface EditUserFormProps {
+interface FormUserEditProps {
   submitButtonText: string;
   onSubmit: FormEventHandler<HTMLFormElement>;
   register: any;
@@ -16,7 +16,7 @@ interface EditUserFormProps {
   isSubmitting: ReturnType<typeof useForm>['formState']['isSubmitting'];
 }
 
-export const EditUserForm: React.FC<EditUserFormProps> = ({
+export const FormUserEdit: React.FC<FormUserEditProps> = ({
   submitButtonText,
   onSubmit,
   register,

@@ -1,4 +1,4 @@
-import { useEditUserForm } from 'src/components/molecules/forms/useEditUserForm';
+import { useUserEditForm } from 'src/components/molecules/forms/useUserEditForm';
 import { nanoid } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ import { addUser } from './../../../redux/features/users/usersSlice';
 export const useUserInvitationModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { handleSubmit, reset, ...hookFormRest } = useEditUserForm();
+  const { handleSubmit, reset, ...hookFormRest } = useUserEditForm();
 
   const isOpen = useAppSelector(selectInviteModal);
 
