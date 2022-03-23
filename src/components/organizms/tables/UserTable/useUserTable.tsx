@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import {
-  getUsers, setUserForSetup
-} from 'src/redux/features/users/usersSlice';
+import { getUsers, setUserForSetup } from 'src/redux/features/users/usersSlice';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -16,11 +14,11 @@ import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
-  const users = useAppSelector(state => state.users.users);
+  const users = useAppSelector((state) => state.users.users);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const selectUser = (data: ExampleObject) =>  dispatch(setUserForSetup(data));
+  const selectUser = (data: ExampleObject) => dispatch(setUserForSetup(data));
 
   useEffect(() => {
     if (!users.length) {
@@ -55,11 +53,7 @@ export const useUserTable = () => {
   );
 
   const checkIfActive = (cell: Cell<ExampleObject, any>) => {
-    const {
-      row: {
-        original: { status },
-      },
-    } = cell;
+    const status = cell.row.original.status;
     return status === 'active';
   };
 
@@ -85,7 +79,7 @@ export const useUserTable = () => {
         Cell: (props: Cell<ExampleObject>) => (
           <UserActionsCell
             handleSettingClick={() => {
-              selectUser(props.row.original)
+              selectUser(props.row.original);
               navigate('/setup-user');
             }}
             handleDeleteClick={() => navigate('/delete-user')}

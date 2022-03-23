@@ -1,18 +1,18 @@
 {
   "users": [
     {
+      "email": "New@mail.com",
       "id": "9Jr7M035oOSKXLfXQqNFx",
-      "user": "Tesing",
+      "role": "admin",
       "status": "inactive",
-      "role": "Admin",
-      "email": "New"
+      "user": "_Tested_"
     },
     {
       "id": "m4uyBBiBNGNc6ZfDcjiQW",
       "status": "active",
-      "user": "Levan",
+      "user": "Leva12",
       "email": "sh.archemashvili@gmail.com",
-      "role": "user"
+      "role": "admin"
     },
     {
       "id": "tSNb4rsw_cIysFhxI-jfb",

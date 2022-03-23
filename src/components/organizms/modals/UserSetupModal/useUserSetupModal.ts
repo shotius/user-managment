@@ -1,3 +1,4 @@
+import { updateUser } from './../../../../redux/features/users/usersSlice';
 import { ExampleObject } from 'src/types';
 import { useUserEditForm } from 'src/components/molecules/forms/useUserEditForm';
 import { useEffect, useState } from 'react';
@@ -11,47 +12,73 @@ import {
 import { setUserForSetup } from 'src/redux/features/users/usersSlice';
 
 export const useUserSetupModal = () => {
-  const [isActive, setIsActive] = useState(true);
-  const userForSetup = useAppSelector(state => state.users.selectedUser)
+  const userForSetup = useAppSelector((state) => state.users.selectedUser);
   const isOpen = useAppSelector(selectUserSetupModal);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { handleSubmit, reset, isSubmitting, errors, register } =
-    useUserEditForm({
-      defaultValues: userForSetup,
-    });
-
-  const onOpen = () => dispatch(openUserSetupModal());
-
-  const closeModal = () => dispatch(closeUserSetupModal());
-
-  const removeSelectedUser = () => dispatch(setUserForSetup(undefined));
-
-  const onClose = () => {
-    closeModal();
-    removeSelectedUser();
-    navigate('/');
-  };
-
-  const onSubmit = handleSubmit((data: ExampleObject) => {
-    console.log('data: ', data);
-    reset();
-  });
+  const isActive = userForSetup?.status === "active"
 
   // Open Modal on Page load
   useEffect(() => {
     onOpen();
   }, []);
 
+  // if User is not selected  -> close the modal
+  if (!userForSetup) {
+    onClose();
+  }
+
+  const { handleSubmit, reset, isSubmitting, errors, register } =
+    useUserEditForm({
+      defaultValues: userForSetup,
+    });
+
+  function onOpen() {
+    dispatch(openUserSetupModal());
+  }
+
+  function closeModal() {
+    dispatch(closeUserSetupModal());
+  }
+
+  function removeSelectedUser() {
+    dispatch(setUserForSetup(undefined));
+  }
+
+  function onClose() {
+    closeModal();
+    removeSelectedUser();
+    navigate('/');
+  }
+
+  function handleError(error: unknown) {
+    console.log(error);
+  }
+
+  function handleToggleStatus() {
+    if (!userForSetup) return;
+    const updatedUser: ExampleObject = {
+      ...userForSetup,
+      status: userForSetup.status === 'active' ? 'inactive' : 'active',
+    };
+    dispatch(updateUser(updatedUser)).catch(handleError);
+  }
+
+  const onSubmit = handleSubmit((data: ExampleObject) => {
+    dispatch(updateUser(data)).then(onClose).catch(handleError);
+    reset();
+  });
+
   return {
     isOpen,
     onClose,
     isActive,
-    setIsActive,
     isSubmitting,
     errors,
     onSubmit,
     register,
+    handleToggleStatus,
+    userForSetup,
   };
 };

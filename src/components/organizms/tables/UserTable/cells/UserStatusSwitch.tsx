@@ -6,9 +6,10 @@ import { useUserTable } from '../useUserTable';
 
 export const UserStatusSwitch: React.FC<Cell<ExampleObject>> = (cell) => {
   const { checkIfActive } = useUserTable();
+
   return (
     <CenterVerticaly>
-      <Switch size="md" pl="4" defaultChecked={checkIfActive(cell)} />
+      <Switch size="md" pl="4" isChecked={checkIfActive(cell)} />
     </CenterVerticaly>
   );
 };

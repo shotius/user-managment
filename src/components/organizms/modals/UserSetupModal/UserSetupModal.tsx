@@ -5,7 +5,7 @@ import {
   HStack,
   ModalHeader,
   Switch,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
 import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
@@ -19,14 +19,17 @@ import { useUserSetupModal } from './useUserSetupModal';
 interface UserSetupModalProps {}
 
 export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
-  const { isOpen, onClose, isActive, setIsActive, ...formProps } =
-    useUserSetupModal();
+  const {
+    isOpen,
+    onClose,
+    isActive, 
+    userForSetup,
+    handleToggleStatus,
+    ...formProps
+  } = useUserSetupModal();
 
   return (
-    <ModalWrapper
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <ModalWrapper isOpen={isOpen} onClose={onClose}>
       <VStack p="0" align="start" spacing="0" pb="24px">
         <ModalHeader p="0">User Setup</ModalHeader>
         <TextSecondary>information and settings</TextSecondary>
@@ -51,9 +54,12 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
           </Center>
           <VStack spacing="0" align="start">
             <TextMain>
-              Name Lastname <KeyIcon ml="1" stroke="brandBlue.400" />
+              {userForSetup ? userForSetup.user : '-'}
+              <KeyIcon ml="1" stroke="brandBlue.400" />
             </TextMain>
-            <TextSecondary>mail@mail.com</TextSecondary>
+            <TextSecondary>
+              {userForSetup ? userForSetup.email : '-'}
+            </TextSecondary>
           </VStack>
         </HStack>
         <Button
@@ -63,6 +69,7 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
           w="full"
           bg="blue.50"
           _hover={{ filter: 'brightness(105%)' }}
+          onClick={onClose}
         >
           Resend the invitation
         </Button>
@@ -75,9 +82,8 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
             </TextMain>
             <Switch
               defaultChecked
-              onChange={() => {
-                setIsActive((val) => !val);
-              }}
+              isChecked={userForSetup?.status === 'active'}
+              onChange={handleToggleStatus}
             />
           </HStack>
         </HStack>

@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  nanoid,
+} from '@reduxjs/toolkit';
 import { userService } from 'src/services/user.services';
 import { ExampleObject } from 'src/types';
 import type { RootState } from '../../app/store';
@@ -40,12 +45,29 @@ export const addUser = createAsyncThunk<
   }
 });
 
+// Update user
+export const updateUser = createAsyncThunk<
+  ExampleObject,
+  ExampleObject,
+  { rejectValue: string }
+>('users/updateUser', async (user, { rejectWithValue }) => {
+  try {
+    const users = await userService.updateUser(user);
+    return users;
+  } catch (error) {
+    return rejectWithValue('Could not update user');
+  }
+});
+
 // User Slice
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setUserForSetup: (state, action: PayloadAction<ExampleObject | undefined>) => {
+    setUserForSetup: (
+      state,
+      action: PayloadAction<ExampleObject | undefined>
+    ) => {
       state.selectedUser = action.payload;
     },
   },
@@ -58,6 +80,14 @@ export const usersSlice = createSlice({
     // Add User
     builder.addCase(addUser.fulfilled, (state, action) => {
       state.users.push(action.payload);
+    });
+
+    // Update User
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.users = state.users.map((user) =>
+        user.id === action.payload.id ? action.payload : user
+      );
+      state.selectedUser = action.payload
     });
   },
 });
