@@ -18,25 +18,6 @@ export const useUserTable = () => {
   const [users, setUsers] = useState<ExampleObject[]>([]);
   const navigate = useNavigate();
 
-  // modals
-  const {
-    isOpen: isInviteModalOpen,
-    onOpen: openInviteModal,
-    onClose: closeInviteModal,
-  } = useDisclosure();
-
-  const {
-    isOpen: isUserSetupModalOpen,
-    onOpen: openUserSetup,
-    onClose: closeUserSetup,
-  } = useDisclosure();
-
-  const {
-    isOpen: isUserDeleteModalOpen,
-    onOpen: openUserDeleteModal,
-    onClose: closeUserDeleteModal,
-  } = useDisclosure();
-
   useEffect(() => {
     userService.getUsers().then(setUsers);
   }, []);
@@ -98,10 +79,10 @@ export const useUserTable = () => {
         Cell: (props: Cell<ExampleObject>) => (
           <UserActionsCell
             handleSettingClick={() => {
-              openUserSetup();
+              navigate('/setup-user')
               setUserForSetup(props.row.original);
             }}
-            handleDeleteClick={openUserDeleteModal}
+            handleDeleteClick={() => navigate('/delete-user')}
           />
         ),
       },
@@ -111,18 +92,9 @@ export const useUserTable = () => {
   return {
     data,
     columns,
-    isInviteModalOpen,
-    openInviteModal,
-    closeInviteModal,
     getAdditionalColumns,
     checkIfActive,
-    isUserSetupModalOpen,
-    openUserSetup,
-    closeUserSetup,
     userForSetup,
     setUserForSetup,
-    isUserDeleteModalOpen,
-    openUserDeleteModal,
-    closeUserDeleteModal,
   };
 };

@@ -7,36 +7,20 @@ import {
   Th,
   Thead,
   Tr,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { useFlexLayout, useRowSelect, useSortBy, useTable } from 'react-table';
 import { ButtonIconRound } from 'src/components/atoms/buttons/ButtonIconRound';
 import { ButtonPagin } from 'src/components/atoms/buttons/PaginButton';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
 import { DropdownIcon } from 'src/components/icons/DropdownIcon';
-import userService from 'src/services/user.services';
-import { UserInvitationModal } from '../../modals/UserInvitationModal';
-import { UserDeleteModal } from '../../UserDeleteModal';
-import { UserSetupModal } from '../../UserSetupModal';
 import { useUserTable } from './useUserTable';
 
 interface UserTableProps {}
 
 export const UserTable: React.FC<UserTableProps> = ({}) => {
   // component variables
-  const {
-    data,
-    columns,
-    getAdditionalColumns,
-    checkIfActive,
-    isInviteModalOpen,
-    closeInviteModal,
-    isUserSetupModalOpen,
-    closeUserSetup,
-    isUserDeleteModalOpen,
-    closeUserDeleteModal,
-  } = useUserTable();
+  const { data, columns, getAdditionalColumns, checkIfActive } = useUserTable();
 
   // react table variables
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -53,15 +37,6 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
 
   return (
     <>
-      <UserInvitationModal
-        isOpen={isInviteModalOpen}
-        onClose={closeInviteModal}
-      />
-      <UserSetupModal isOpen={isUserSetupModalOpen} onClose={closeUserSetup} />
-      <UserDeleteModal
-        isOpen={isUserDeleteModalOpen}
-        onClose={closeUserDeleteModal}
-      />
       <VStack mb="120px" spacing="8">
         <Table {...getTableProps()}>
           <Thead>

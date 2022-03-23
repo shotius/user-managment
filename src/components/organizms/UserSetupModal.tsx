@@ -8,7 +8,14 @@ import {
   Switch,
   VStack,
 } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
+import {
+  closeUserSetupModal,
+  openUserSetupModal,
+  selectUserSetupModal,
+} from 'src/redux/features/modals/modalsSlice';
 import { ButtonPrimary } from '../atoms/buttons/ButtonPrimary';
 import { TextMain } from '../atoms/Typography/TextMain';
 import { TextSecondary } from '../atoms/Typography/TextSecondary';
@@ -17,13 +24,24 @@ import { UserProfileIcon } from '../icons/UserProfileIcon';
 import { EditUserForm } from '../molecules/EditUserForm';
 import { ModalWrapper } from '../molecules/modals/ModalWrapper';
 
-interface UserSetupModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+interface UserSetupModalProps {}
 
-export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
+export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
   const [isActive, setIsActive] = useState(true);
+
+  const isOpen = useAppSelector(selectUserSetupModal);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onOpen = () => dispatch(openUserSetupModal());
+  const onClose = () => {
+    dispatch(closeUserSetupModal());
+    navigate('/');
+  };
+
+  useEffect(() => {
+    onOpen();
+  }, []);
 
   // Submit button for user form
   // it is button or null depenging on active state
@@ -39,7 +57,11 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = (props) => {
   );
 
   return (
-    <ModalWrapper {...props} opacity={isActive ? 1 : '0.5'}>
+    <ModalWrapper
+      isOpen={isOpen}
+      onClose={onClose}
+      opacity={isActive ? 1 : '0.5'}
+    >
       <VStack p="0" align="start" spacing="0" pb="24px">
         <ModalHeader p="0">User Setup</ModalHeader>
         <TextSecondary>information and settings</TextSecondary>
