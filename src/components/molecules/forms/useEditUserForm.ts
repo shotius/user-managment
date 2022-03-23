@@ -1,3 +1,5 @@
+import { addUser } from './../../../redux/features/users/usersSlice';
+import { useAppDispatch } from 'src/redux/app/hooks';
 import { userService } from 'src/services/user.services';
 import { IFormUser } from 'src/types';
 import { editUserSchema } from './validationSchema';
@@ -7,6 +9,7 @@ import { ExampleObject } from 'src/types';
 import { nanoid } from '@reduxjs/toolkit';
 
 export const useEditUserForm = () => {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -26,11 +29,10 @@ export const useEditUserForm = () => {
 
   const onSubmit = handleSubmit(async (data: IFormUser) => {
     const newUser = formatUser(data);
-    userService
-      .addUser(newUser)
-      .then(() => {
-        reset();
-        userService.getUsers();
+    dispatch(addUser(newUser))
+      .then((data) => {
+        console.log('data added', data)
+        reset()
       })
       .catch(handleError);
   });

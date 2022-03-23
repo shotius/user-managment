@@ -8,59 +8,24 @@
       "email": "sh.archemashvili@gmail.com"
     },
     {
-      "id": "2",
-      "user": "D",
+      "id": "dR6VyQJqkXv79Rq5fNyxn",
       "status": "active",
-      "role": "User",
-      "email": "sh.archemashvili@gmail.com"
+      "user": "shotius",
+      "email": "sh.archemashvili@gmail.com",
+      "role": "user"
     },
     {
-      "id": "3",
-      "user": "Z",
-      "status": "active",
-      "role": "Admin",
-      "email": "sh.archemashvili@gmail.com"
-    },
-    {
-      "id": "4",
-      "user": "B",
-      "status": "inactive",
-      "role": "Admin",
-      "email": "sh.archemashvili@gmail.com"
-    },
-    {
-      "id": "5",
-      "user": "A",
-      "status": "active",
-      "role": "Admin",
-      "email": "sh.archemashvili@gmail.com"
-    },
-    {
-      "id": "122",
-      "user": "Tesing",
-      "status": "inactive",
-      "role": "Admin",
-      "email": "New"
-    },
-    {
-      "id": "o2ug_kF5ofdzRTEBjUXSn",
+      "id": "Wn44OfMgSOaImB0EC9lp5",
       "status": "active",
       "user": "asdf",
       "email": "sh.archemashvili@gmail.com",
-      "role": "admin"
+      "role": "user"
     },
     {
-      "id": "21lra9lP1HOJWin0i5-LY",
+      "id": "d8nxUV5yp08BfYH2Ud13X",
       "status": "active",
-      "user": "Shotius",
-      "email": "sh.archemashvili@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": "ZGrkrkgF9OQRsN8AMtAjH",
-      "status": "active",
-      "user": "Shotius 2",
-      "email": "sh.archemashvili@gmail.com",
+      "user": "Yuhuuu",
+      "email": "carspace77@gmail.com",
       "role": "admin"
     }
   ]

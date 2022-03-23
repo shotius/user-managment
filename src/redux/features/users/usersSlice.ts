@@ -11,6 +11,7 @@ const initialState: UsersState = {
   users: [],
 };
 
+// Get users
 export const getUsers = createAsyncThunk<
   ExampleObject[],
   any,
@@ -24,13 +25,35 @@ export const getUsers = createAsyncThunk<
   }
 });
 
+// Add user
+export const addUser = createAsyncThunk<
+  ExampleObject,
+  ExampleObject,
+  { rejectValue: string }
+>('users/addUser', async (user, { rejectWithValue }) => {
+  try {
+    const users = await userService.addUser(user);
+    return users;
+  } catch (error) {
+    return rejectWithValue('Could not add user');
+  }
+});
+
+// User Slice
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // Get Users
     builder.addCase(getUsers.fulfilled, (state, action) => {
+      console.log('in reducer');
       state.users = action.payload;
+    });
+
+    // Add User
+    builder.addCase(addUser.fulfilled, (state, action) => {
+      state.users.push(action.payload);
     });
   },
 });
@@ -38,6 +61,6 @@ export const usersSlice = createSlice({
 export const {} = usersSlice.actions;
 
 // Selectors
-export const selectUser = (state: RootState) => state.users.users
+export const selectUser = (state: RootState) => state.users.users;
 
 export default usersSlice.reducer;

@@ -15,12 +15,14 @@ import { UserTableHeader } from './cells/UserTableHeader';
 
 export const useUserTable = () => {
   const [userForSetup, setUserForSetup] = useState<ExampleObject | null>(null);
-  const users = useAppSelector(selectUser)
+  const users  = useAppSelector(selectUser);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getUsers(''))
+    if (!users.length) {
+      dispatch(getUsers(''));
+    }
   }, []);
 
   // user table data
