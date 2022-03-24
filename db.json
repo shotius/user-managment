@@ -8,23 +8,9 @@
       "role": "admin"
     },
     {
-      "id": "w8u3b-bEd-z9HnFxKQla3",
-      "status": "active",
-      "user": "123123",
-      "email": "123@gmail.com",
-      "role": "user"
-    },
-    {
-      "email": "New@mail.com",
-      "id": "9Jr7M05oOadx",
-      "role": "User",
-      "status": "active",
-      "user": "_Tested"
-    },
-    {
       "email": "New@mail.com",
       "id": "9Jr7M0sdfad5oOadx",
-      "role": "User",
+      "role": "admin",
       "status": "active",
       "user": "_Tested"
     },
@@ -650,6 +636,20 @@
       "role": "User",
       "status": "active",
       "user": "_Tested1"
+    },
+    {
+      "id": "fp9CN0yXiwCYCEP84N4mk",
+      "status": "active",
+      "user": "Yuhuuu",
+      "email": "carspace77@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": "hxAwm2HrZ3bWcR7V9HK3I",
+      "status": "active",
+      "user": "123123",
+      "email": "sh.archemashvili@gmail.com",
+      "role": "user"
     }
   ]
 }

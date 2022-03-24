@@ -108,7 +108,7 @@ export const usersSlice = createSlice({
 
     // Add User
     builder.addCase(addUser.fulfilled, (state, action) => {
-      state.users.push(action.payload);
+      state.users.unshift(action.payload);
     });
 
     // Update User
