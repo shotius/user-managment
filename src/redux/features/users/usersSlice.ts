@@ -114,6 +114,7 @@ export const usersSlice = createSlice({
     // Update User
     builder.addCase(updateUser.fulfilled, (state, action) => {
       state.users = replaceUser(current(state.users), action.payload);
+      state.selectedUser = action.payload
     });
 
     // Delete User

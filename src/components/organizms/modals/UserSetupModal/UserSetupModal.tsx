@@ -8,10 +8,10 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { ButtonPrimary } from 'src/components/atoms/buttons/ButtonPrimary';
-import { TextMain } from 'src/components/atoms/Typography/TextMain';
-import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
 import { KeyIcon } from 'src/components/atoms/icons/KeyIcon';
 import { UserProfileIcon } from 'src/components/atoms/icons/UserProfileIcon';
+import { TextMain } from 'src/components/atoms/Typography/TextMain';
+import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
 import { FormUserEdit } from 'src/components/molecules/forms/FormUserEdit';
 import { ModalWrapper } from 'src/components/molecules/modals/ModalWrapper';
 import { useUserSetupModal } from './useUserSetupModal';
@@ -19,17 +19,10 @@ import { useUserSetupModal } from './useUserSetupModal';
 interface UserSetupModalProps {}
 
 export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
-  const {
-    isOpen,
-    onClose,
-    isActive,
-    userForSetup,
-    handleToggleStatus,
-    ...formProps
-  } = useUserSetupModal();
+  const { isOpen, onClose, isActive, user, handleToggleStatus, ...formProps } =
+    useUserSetupModal();
 
-  if (!userForSetup) {
-    onClose();
+  if (!user) {
     return null;
   }
 
@@ -59,12 +52,10 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
           </Center>
           <VStack spacing="0" align="start">
             <TextMain>
-              {userForSetup ? userForSetup.user : '-'}
+              {user ? user.user : '-'}
               <KeyIcon ml="1" stroke="brandBlue.400" />
             </TextMain>
-            <TextSecondary>
-              {userForSetup ? userForSetup.email : '-'}
-            </TextSecondary>
+            <TextSecondary>{user ? user.email : '-'}</TextSecondary>
           </VStack>
         </HStack>
         <Button
@@ -86,8 +77,8 @@ export const UserSetupModal: React.FC<UserSetupModalProps> = () => {
               the user is <b>Active</b>
             </TextMain>
             <Switch
-              isChecked={userForSetup?.status === 'active'}
-              onChange={() => handleToggleStatus(userForSetup)}
+              isChecked={user?.status === 'active'}
+              onChange={() => handleToggleStatus(user)}
             />
           </HStack>
         </HStack>

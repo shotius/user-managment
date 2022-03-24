@@ -20,7 +20,7 @@ export const UserInvitationModal: React.FC<UserInvitationModal> = () => {
         {...formProps}
         submitButton={
           <ButtonPrimary type="submit" isLoading={isSubmitting}>
-            "Send Invitation"
+            Send Invitation
           </ButtonPrimary>
         }
       />

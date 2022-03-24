@@ -6,13 +6,11 @@ import {
   usePagination,
   useRowSelect,
   useSortBy,
-  useTable
+  useTable,
 } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch } from 'src/redux/app/hooks';
-import {
-  updateUser
-} from 'src/redux/features/users/usersSlice';
+import { updateUser } from 'src/redux/features/users/usersSlice';
 import { ExampleObject } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -20,7 +18,6 @@ import { UserProfileButton } from './cells/UserProfileButton';
 import { useUserTableData } from './useUserTableData';
 
 export const useUserTable = () => {
-  
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data, columns } = useUserTableData();
@@ -113,7 +110,7 @@ export const useUserTable = () => {
     withScroll,
     getTableProps,
     getTableBodyProps,
-    scrollTop, 
+    scrollTop,
     headerGroups,
     page,
     prepareRow,

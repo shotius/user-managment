@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserEditForm } from 'src/components/molecules/forms/useUserEditForm';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {
   closeUserSetupModal,
   openUserSetupModal,
-  selectUserSetupModal
+  selectUserSetupModal,
 } from 'src/redux/features/modals/modalsSlice';
-import { setUserForSetup } from 'src/redux/features/users/usersSlice';
+import {
+  selectUsers,
+  setUserForSetup,
+} from 'src/redux/features/users/usersSlice';
 import { ExampleObject } from 'src/types';
 import { updateUser } from './../../../../redux/features/users/usersSlice';
 import { useUserTable } from './../../tables/UserTable/useUserTable';
@@ -18,6 +21,11 @@ export const useUserSetupModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const users = useAppSelector(selectUsers);
+  const [user, setUser] = useState<ExampleObject | undefined>(
+    findUserById(users, userForSetup?.id)
+  );
+
   const isActive = userForSetup?.status === 'active';
 
   // Open Modal on Page load
@@ -25,10 +33,10 @@ export const useUserSetupModal = () => {
     onOpen();
   }, []);
 
-  // if User is not selected  -> close the modal
-  if (!userForSetup) {
-    onClose();
-  }
+  // Select User to show on the modal
+  useEffect(() => {
+    setUser(findUserById(users, userForSetup?.id));
+  }, [userForSetup]);
 
   const { handleSubmit, reset, isSubmitting, errors, register } =
     useUserEditForm({
@@ -36,6 +44,13 @@ export const useUserSetupModal = () => {
     });
 
   const { handleToggleStatus } = useUserTable();
+
+  function findUserById(users: ExampleObject[], id: string | void) {
+    if (!id) {
+      return undefined;
+    }
+    return users.find((user) => user.id === id);
+  }
 
   function onOpen() {
     dispatch(openUserSetupModal());
@@ -73,6 +88,6 @@ export const useUserSetupModal = () => {
     onSubmit,
     register,
     handleToggleStatus,
-    userForSetup,
+    user,
   };
 };
