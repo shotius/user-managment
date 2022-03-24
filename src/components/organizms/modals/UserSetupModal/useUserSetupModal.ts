@@ -1,16 +1,16 @@
-import { useUserTable } from './../../tables/UserTable/useUserTable';
-import { updateUser } from './../../../../redux/features/users/usersSlice';
-import { ExampleObject } from 'src/types';
-import { useUserEditForm } from 'src/components/molecules/forms/useUserEditForm';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserEditForm } from 'src/components/molecules/forms/useUserEditForm';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {
   closeUserSetupModal,
   openUserSetupModal,
-  selectUserSetupModal,
+  selectUserSetupModal
 } from 'src/redux/features/modals/modalsSlice';
 import { setUserForSetup } from 'src/redux/features/users/usersSlice';
+import { ExampleObject } from 'src/types';
+import { updateUser } from './../../../../redux/features/users/usersSlice';
+import { useUserTable } from './../../tables/UserTable/useUserTable';
 
 export const useUserSetupModal = () => {
   const userForSetup = useAppSelector((state) => state.users.selectedUser);

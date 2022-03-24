@@ -3,8 +3,6 @@ import { ButtonIconRound } from 'src/components/atoms/buttons/ButtonIconRound';
 import { ButtonPagin } from 'src/components/atoms/buttons/PaginButton';
 import { DropdownIcon } from 'src/components/atoms/icons/DropdownIcon';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
-import { useUserTable } from 'src/components/organizms/tables/UserTable/useUserTable';
-import { range } from 'src/utils/functions';
 import { useUserTablePagination } from './useUserTablePagination';
 
 interface PaginationProps {}

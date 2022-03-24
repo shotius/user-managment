@@ -1,5 +1,5 @@
 import { Td, Th } from '@chakra-ui/react';
-import { ComponentProps, FC } from 'react';
+import { ComponentProps } from 'react';
 
 type IUserRole = 'Admin' | 'User';
 

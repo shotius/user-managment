@@ -10,7 +10,6 @@ import { UserInfoCell } from './cells/UserInfoCell';
 import { UserRoleCell } from './cells/UserRoleCell';
 import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
-import { useTimeout } from '@chakra-ui/react';
 
 export const useUserTableData = () => {
   const users = useAppSelector((state) => state.users.users);

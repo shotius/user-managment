@@ -1,11 +1,10 @@
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import React, { useMemo, useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import {
-  selectSearchWord,
-  setSearchWord,
-} from 'src/redux/features/users/usersSlice';
 import debounce from 'lodash.debounce';
+import React, { useMemo } from 'react';
+import { useAppDispatch } from 'src/redux/app/hooks';
+import {
+  setSearchWord
+} from 'src/redux/features/users/usersSlice';
 
 interface InputWithLeftIconProps {
   icon: any;
@@ -14,7 +13,6 @@ interface InputWithLeftIconProps {
 export const InputWithLeftIcon: React.FC<InputWithLeftIconProps> = ({
   icon: Icon,
 }) => {
-  const searchWord = useAppSelector(selectSearchWord);
   const dispatch = useAppDispatch();
 
   function changeHandler(e: React.SyntheticEvent<HTMLInputElement>) {
