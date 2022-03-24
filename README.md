@@ -1,2 +1,2 @@
 # user-managment
-### To run the application run: ```npm start```
+### To run the application run: ```npm i && npm start```
