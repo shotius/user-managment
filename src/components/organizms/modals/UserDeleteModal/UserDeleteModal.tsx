@@ -1,31 +1,20 @@
-import { Box, Button, HStack, ModalHeader, VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import {
-  closeUserDeleteModal,
-  openUserDeleteModal,
-  selectUserDeleteModal,
-} from 'src/redux/features/modals/modalsSlice';
+import { Button, HStack, ModalHeader, VStack } from '@chakra-ui/react';
+import { capitalize } from 'src/utils/functions';
 import { TextMain } from '../../../atoms/Typography/TextMain';
 import { UserProfileIcon } from '../../../icons/UserProfileIcon';
 import { ModalWrapper } from '../../../molecules/modals/ModalWrapper';
+import { useUserDeleteModal } from './useUserDeleteModal';
 
 interface UserDeleteModalProps {}
 
 export const UserDeleteModal: React.FC<UserDeleteModalProps> = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  
-  const isOpen = useAppSelector(selectUserDeleteModal);
-  const onClose = () => {
-    dispatch(closeUserDeleteModal());
-    navigate('/');
-  };
+  const { isOpen, onClose, user, handleDelete, isDeleting } =
+    useUserDeleteModal();
 
-  useEffect(() => {
-    dispatch(openUserDeleteModal());
-  }, []);
+  if (!user) {
+    onClose();
+    return null;
+  }
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose}>
@@ -41,11 +30,20 @@ export const UserDeleteModal: React.FC<UserDeleteModalProps> = () => {
         >
           <HStack>
             <UserProfileIcon stroke="black" />
-            <TextMain>Name lastname</TextMain>
+            <TextMain>{user ? user.user : '-'}</TextMain>
           </HStack>
-          <TextMain color="brandBlue.400">Active</TextMain>
+          <TextMain color="brandBlue.400">
+            {user ? capitalize(user.status) : '-'}
+          </TextMain>
         </HStack>
-        <Button colorScheme={'red'} p="6" w="full" borderRadius={'12px'}>
+        <Button
+          colorScheme={'red'}
+          p="6"
+          w="full"
+          borderRadius={'12px'}
+          onClick={() => handleDelete(user)}
+          isLoading={isDeleting}
+        >
           Delete User
         </Button>
       </VStack>

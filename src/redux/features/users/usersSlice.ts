@@ -1,11 +1,16 @@
+import { userSliceUtils } from './userSlice.utils';
 import {
   createAsyncThunk,
   createSlice,
-  PayloadAction
+  current,
+  PayloadAction,
 } from '@reduxjs/toolkit';
 import { userService } from 'src/services/user.services';
 import { ExampleObject } from 'src/types';
+import { isString, sleep } from 'src/utils/functions';
 import type { RootState } from '../../app/store';
+
+const { removeUser, replaceUser } = userSliceUtils;
 
 interface UsersState {
   users: ExampleObject[];
@@ -58,6 +63,23 @@ export const updateUser = createAsyncThunk<
   }
 });
 
+// Delete user
+export const deleteUser = createAsyncThunk<
+  string,
+  string,
+  { rejectValue: string }
+>('users/deleteUser', async (userId, { rejectWithValue }) => {
+  try {
+    await userService.deleteUser(userId);
+    return userId;
+  } catch (error) {
+    if (isString(error)) {
+      return rejectWithValue(error);
+    }
+    return rejectWithValue('Could not delete the user');
+  }
+});
+
 // User Slice
 export const usersSlice = createSlice({
   name: 'users',
@@ -83,10 +105,12 @@ export const usersSlice = createSlice({
 
     // Update User
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      state.users = state.users.map((user) =>
-        user.id === action.payload.id ? action.payload : user
-      );
-      state.selectedUser = action.payload
+      state.users = replaceUser(current(state.users), action.payload);
+    });
+
+    // Delete User
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
+      state.users = removeUser(current(state.users), action.payload);
     });
   },
 });
@@ -94,6 +118,7 @@ export const usersSlice = createSlice({
 export const { setUserForSetup } = usersSlice.actions;
 
 // Selectors
-export const selectUser = (state: RootState) => state.users.users;
+export const selectUsers = (state: RootState) => state.users.users;
+export const selectUser = (state: RootState) => state.users.selectedUser;
 
 export default usersSlice.reducer;

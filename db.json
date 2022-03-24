@@ -1,39 +1,11 @@
 {
   "users": [
     {
-      "email": "New@mail.com",
-      "id": "9Jr7M035oOSKXLfXQqNFx",
-      "role": "admin",
-      "status": "inactive",
-      "user": "_Tested_"
-    },
-    {
-      "id": "m4uyBBiBNGNc6ZfDcjiQW",
-      "status": "active",
-      "user": "Leva12",
-      "email": "sh.archemashvili@gmail.com",
-      "role": "admin"
-    },
-    {
-      "id": "tSNb4rsw_cIysFhxI-jfb",
-      "status": "active",
-      "user": "Yuhuuu",
-      "email": "carspace77@gmail.com",
-      "role": "admin"
-    },
-    {
       "id": "YmHfnQM1Bx-rYTKFM8NLX",
       "status": "active",
-      "user": "Shotius",
+      "user": "Shotius (changed)",
       "email": "sh.archemashvili@gmail.com",
       "role": "admin"
-    },
-    {
-      "id": "iiqGv_zJtgthK4LY1j8QU",
-      "status": "active",
-      "user": "Tester",
-      "email": "123@gmail.com",
-      "role": "user"
     }
   ]
 }

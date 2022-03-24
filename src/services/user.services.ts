@@ -19,8 +19,13 @@ const updateUser = async (user: ExampleObject) => {
 };
 
 const deleteUser = async (id: string) => {
-  console.log('id: ', id, 'should be deleted.');
-  //
+  const result = await axios.delete(`${baseUrl}/${id}`);
+  if (result.status === 200) {
+    return true;
+  }
+  throw new Error(
+    'Could not delete the user' + result.status + result.statusText
+  );
 };
 
 export const userService = {

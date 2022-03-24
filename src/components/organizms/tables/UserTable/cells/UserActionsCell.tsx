@@ -1,16 +1,29 @@
 import { HStack, IconButton } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { Cell } from 'react-table';
 import { SettingIcon } from 'src/components/icons/SettingIcon';
 import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
+import { useAppDispatch } from 'src/redux/app/hooks';
+import { setUserForSetup } from 'src/redux/features/users/usersSlice';
+import { ExampleObject } from 'src/types';
 
-interface Props {
-  handleSettingClick: () => void;
-  handleDeleteClick: () => void;
-}
-
-export const UserActionsCell: React.FC<Props> = ({
-  handleSettingClick,
-  handleDeleteClick,
+export const UserActionsCell: React.FC<Cell<ExampleObject>> = ({
+  row: { original: user },
 }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const selectUser = (data: ExampleObject) => dispatch(setUserForSetup(data));
+  
+  function handleSettingClick(user: ExampleObject) {
+    selectUser(user);
+    navigate('/setup-user');
+  }
+
+  function handleDeleteClick(user: ExampleObject) {
+    selectUser(user);
+    navigate('/delete-user');
+  }
+
   return (
     <HStack justify={'end'}>
       <IconButton
@@ -18,13 +31,13 @@ export const UserActionsCell: React.FC<Props> = ({
         aria-label="settings"
         bg="white"
         size={'lg'}
-        onClick={handleSettingClick}
+        onClick={() => handleSettingClick(user)}
       />
       <IconButton
         icon={<TrashBinIcon />}
         aria-label="deleteUser"
         bg="white"
-        onClick={handleDeleteClick}
+        onClick={() => handleDeleteClick(user)}
       />
     </HStack>
   );

@@ -4,9 +4,7 @@ import { Cell, Hooks } from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {
-  getUsers,
-  setUserForSetup,
-  updateUser,
+  getUsers, updateUser
 } from 'src/redux/features/users/usersSlice';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
@@ -21,8 +19,6 @@ export const useUserTable = () => {
   const users = useAppSelector((state) => state.users.users);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const selectUser = (data: ExampleObject) => dispatch(setUserForSetup(data));
 
   useEffect(() => {
     if (!users.length) {
@@ -73,34 +69,22 @@ export const useUserTable = () => {
     return status === 'active';
   }
 
-  // adding some columns to the table
+  // Adding some columns to the table
   function getAdditionalColumns(hooks: Hooks<ExampleObject>) {
     hooks.visibleColumns.push((columns) => [
-      // Let's make a column for selection
-      {
+      { // Selection - first column
         id: 'selection',
         maxWidth: 80,
         Header: () => <CreateButton onClick={() => navigate('/invite-user')} />,
-        // The cell can use the individual row's getToggleRowSelectedProps method
-        // to the render a checkbox
         Cell: ({ row }) => {
           return <UserProfileButton {...row.getToggleRowSelectedProps()} />;
         },
       },
       ...columns,
-      // actions collumn
-      {
+      { // Actions collumn
         id: 'actions',
         Header: UserActionHeaderCell,
-        Cell: (props: Cell<ExampleObject>) => (
-          <UserActionsCell
-            handleSettingClick={() => {
-              selectUser(props.row.original);
-              navigate('/setup-user');
-            }}
-            handleDeleteClick={() => navigate('/delete-user')}
-          />
-        ),
+        Cell: UserActionsCell,
       },
     ]);
   }
