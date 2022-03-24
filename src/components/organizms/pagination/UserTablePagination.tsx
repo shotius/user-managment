@@ -13,6 +13,7 @@ export const UserTablePagination: React.FC<PaginationProps> = ({}) => {
     setPageSize,
     pageIndex,
     withScroll,
+    scrollTop, 
     previousPage,
     pageCount,
     gotoPage,
@@ -49,7 +50,10 @@ export const UserTablePagination: React.FC<PaginationProps> = ({}) => {
               <ButtonPagin
                 key={page}
                 isActive={pageIndex === page}
-                onClick={() => withScroll(gotoPage(page))}
+                onClick={() => {
+                  gotoPage(page)
+                  scrollTop()
+                }}
               >
                 {page + 1}
               </ButtonPagin>

@@ -12,6 +12,7 @@ export const useUserTablePagination = () => {
     previousPage,
     gotoPage,
     nextPage,
+    scrollTop, 
   } = useUserTable();
 
   const pageNumbersToShow = generatePagesToShow(pageCount, pageIndex)
@@ -22,6 +23,7 @@ export const useUserTablePagination = () => {
     pageIndex,
     withScroll,
     previousPage,
+    scrollTop, 
     pageCount,
     gotoPage,
     nextPage,

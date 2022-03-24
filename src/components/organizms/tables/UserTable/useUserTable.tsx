@@ -98,8 +98,8 @@ export const useUserTable = () => {
   }
 
   function withScroll(fn: any) {
-    scrollTop();
     return () => {
+      scrollTop();
       fn();
     };
   }
@@ -113,6 +113,7 @@ export const useUserTable = () => {
     withScroll,
     getTableProps,
     getTableBodyProps,
+    scrollTop, 
     headerGroups,
     page,
     prepareRow,
