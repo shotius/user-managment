@@ -1,10 +1,10 @@
-import { ExampleObject } from './../../../types';
+import { IUserObject } from './../../../types';
 
-function removeUser(users: ExampleObject[], userIdToRemove: string) {
+function removeUser(users: IUserObject[], userIdToRemove: string) {
   return users.filter((user) => user.id !== userIdToRemove);
 }
 
-function replaceUser(users: ExampleObject[], newUser: ExampleObject) {
+function replaceUser(users: IUserObject[], newUser: IUserObject) {
   return users.map((user) => (user.id === newUser.id ? newUser : user));
 }
 

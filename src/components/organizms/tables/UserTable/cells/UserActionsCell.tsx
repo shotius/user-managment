@@ -5,21 +5,21 @@ import { SettingIcon } from 'src/components/atoms/icons/SettingIcon';
 import { TrashBinIcon } from 'src/components/atoms/icons/TrashBinIcon';
 import { useAppDispatch } from 'src/redux/app/hooks';
 import { setUserForSetup } from 'src/redux/features/users/usersSlice';
-import { ExampleObject } from 'src/types';
+import { IUserObject } from 'src/types';
 
-export const UserActionsCell: React.FC<Cell<ExampleObject>> = ({
+export const UserActionsCell: React.FC<Cell<IUserObject>> = ({
   row: { original: user },
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const selectUser = (data: ExampleObject) => dispatch(setUserForSetup(data));
+  const selectUser = (data: IUserObject) => dispatch(setUserForSetup(data));
   
-  function handleSettingClick(user: ExampleObject) {
+  function handleSettingClick(user: IUserObject) {
     selectUser(user);
     navigate('/setup-user');
   }
 
-  function handleDeleteClick(user: ExampleObject) {
+  function handleDeleteClick(user: IUserObject) {
     selectUser(user);
     navigate('/delete-user');
   }

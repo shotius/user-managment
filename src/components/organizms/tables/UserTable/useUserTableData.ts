@@ -1,4 +1,4 @@
-import { ExampleObject } from './../../../../types';
+import { IUserObject } from './../../../../types';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {
@@ -54,7 +54,7 @@ export const useUserTableData = () => {
     []
   );
 
-  function filterUsersByString(arr: ExampleObject[], str: string) {
+  function filterUsersByString(arr: IUserObject[], str: string) {
     return arr.filter((val) =>
       val.user.toLocaleLowerCase().includes(str.toLocaleLowerCase())
     );

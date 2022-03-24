@@ -1,4 +1,4 @@
-import { ExampleObject } from './../../../types';
+import { IUserObject } from './../../../types';
 import {
   createAsyncThunk,
   createSlice,
@@ -13,8 +13,8 @@ import { userSliceUtils } from './userSlice.utils';
 const { removeUser, replaceUser } = userSliceUtils;
 
 interface UsersState {
-  users: ExampleObject[];
-  selectedUser?: ExampleObject;
+  users: IUserObject[];
+  selectedUser?: IUserObject;
   searchWord: string;
 }
 
@@ -25,7 +25,7 @@ const initialState: UsersState = {
 
 // Get users
 export const getUsers = createAsyncThunk<
-  ExampleObject[],
+  IUserObject[],
   void,
   { rejectValue: string }
 >('users/getUsers', async (_, { rejectWithValue }) => {
@@ -39,8 +39,8 @@ export const getUsers = createAsyncThunk<
 
 // Add user
 export const addUser = createAsyncThunk<
-  ExampleObject,
-  ExampleObject,
+  IUserObject,
+  IUserObject,
   { rejectValue: string }
 >('users/addUser', async (user, { rejectWithValue }) => {
   try {
@@ -53,8 +53,8 @@ export const addUser = createAsyncThunk<
 
 // Update user
 export const updateUser = createAsyncThunk<
-  ExampleObject,
-  ExampleObject,
+  IUserObject,
+  IUserObject,
   { rejectValue: string }
 >('users/updateUser', async (user, { rejectWithValue }) => {
   try {
@@ -90,12 +90,12 @@ export const usersSlice = createSlice({
     setSearchWord: (state, action: PayloadAction<string>) => {
       state.searchWord = action.payload;
     },
-    setUsers: (state, action: PayloadAction<ExampleObject[]>) => {
+    setUsers: (state, action: PayloadAction<IUserObject[]>) => {
       state.users = action.payload;
     },
     setUserForSetup: (
       state,
-      action: PayloadAction<ExampleObject | undefined>
+      action: PayloadAction<IUserObject | undefined>
     ) => {
       state.selectedUser = action.payload;
     },

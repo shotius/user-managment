@@ -8,7 +8,7 @@ import {
   openInviteModal,
   selectInviteModal,
 } from 'src/redux/features/modals/modalsSlice';
-import { ExampleObject, IFormUser } from 'src/types';
+import { IUserObject, IFormUser } from 'src/types';
 import { addUser } from 'src/redux/features/users/usersSlice';
 
 export const useUserInvitationModal = () => {
@@ -30,7 +30,7 @@ export const useUserInvitationModal = () => {
     navigate('/');
   };
 
-  const formatUser = (data: IFormUser): ExampleObject => {
+  const formatUser = (data: IFormUser): IUserObject => {
     return { id: nanoid(), status: 'active', ...data };
   };
 

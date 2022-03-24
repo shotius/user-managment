@@ -3,9 +3,9 @@ import { CellProps } from 'react-table';
 import { CenterVerticaly } from 'src/components/atoms/templates/CenterCerticaly';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
 import { TextSecondary } from 'src/components/atoms/Typography/TextSecondary';
-import { ExampleObject } from 'src/types';
+import { IUserObject } from 'src/types';
 
-export const UserInfoCell: React.FC<CellProps<ExampleObject>> = ({
+export const UserInfoCell: React.FC<CellProps<IUserObject>> = ({
   row: { original },
 }) => {
   return (

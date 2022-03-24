@@ -11,7 +11,7 @@ import {
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch } from 'src/redux/app/hooks';
 import { updateUser } from 'src/redux/features/users/usersSlice';
-import { ExampleObject } from 'src/types';
+import { IUserObject } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
 import { UserProfileButton } from './cells/UserProfileButton';
@@ -52,21 +52,21 @@ export const useUserTable = () => {
     console.log('unhandled error: ', error);
   }
 
-  function handleToggleStatus(user: ExampleObject) {
-    const toggledObj: ExampleObject = {
+  function handleToggleStatus(user: IUserObject) {
+    const toggledObj: IUserObject = {
       ...user,
       status: user.status === 'active' ? 'inactive' : 'active',
     };
     dispatch(updateUser(toggledObj)).catch(handleError);
   }
 
-  function checkIfActive(cell: Cell<ExampleObject, any>) {
+  function checkIfActive(cell: Cell<IUserObject, any>) {
     const status = cell.row.original.status;
     return status === 'active';
   }
 
   // Adding some columns to the table
-  function getAdditionalColumns(hooks: Hooks<ExampleObject>) {
+  function getAdditionalColumns(hooks: Hooks<IUserObject>) {
     hooks.visibleColumns.push((columns) => [
       {
         // Selection - first column

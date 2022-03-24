@@ -12,7 +12,7 @@ interface IBaseUser {
 
 export type IUserTableColumnTypes = keyof IBaseUser
 
-export interface ExampleObject extends IBaseUser {
+export interface IUserObject extends IBaseUser {
   email: string;
 }
 
@@ -25,4 +25,4 @@ export interface IUserTableColumn {
 }
 
 
-export type IFormUser  = Pick<ExampleObject, "email" | "role" | "user">
+export type IFormUser  = Pick<IUserObject, "email" | "role" | "user">

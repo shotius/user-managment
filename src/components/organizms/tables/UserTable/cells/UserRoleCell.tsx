@@ -4,9 +4,9 @@ import { TextMain } from 'src/components/atoms/Typography/TextMain';
 import { KeyIcon } from 'src/components/atoms/icons/KeyIcon';
 import { capitalize, isAdmin } from 'src/utils/functions';
 import { Cell } from 'react-table';
-import { ExampleObject } from 'src/types';
+import { IUserObject } from 'src/types';
 
-export const UserRoleCell: React.FC<Cell<ExampleObject>> = ({
+export const UserRoleCell: React.FC<Cell<IUserObject>> = ({
   row: {
     original: { role },
   },

@@ -11,7 +11,7 @@ import {
   selectUsers,
   setUserForSetup,
 } from 'src/redux/features/users/usersSlice';
-import { ExampleObject } from 'src/types';
+import { IUserObject } from 'src/types';
 import { updateUser } from './../../../../redux/features/users/usersSlice';
 import { useUserTable } from './../../tables/UserTable/useUserTable';
 
@@ -22,7 +22,7 @@ export const useUserSetupModal = () => {
   const navigate = useNavigate();
 
   const users = useAppSelector(selectUsers);
-  const [user, setUser] = useState<ExampleObject | undefined>(
+  const [user, setUser] = useState<IUserObject | undefined>(
     findUserById(users, userForSetup?.id)
   );
 
@@ -45,7 +45,7 @@ export const useUserSetupModal = () => {
 
   const { handleToggleStatus } = useUserTable();
 
-  function findUserById(users: ExampleObject[], id: string | void) {
+  function findUserById(users: IUserObject[], id: string | void) {
     if (!id) {
       return undefined;
     }
@@ -74,7 +74,7 @@ export const useUserSetupModal = () => {
     console.log('unhandled error: ', error);
   }
 
-  const onSubmit = handleSubmit((data: ExampleObject) => {
+  const onSubmit = handleSubmit((data: IUserObject) => {
     dispatch(updateUser(data)).then(onClose).catch(handleError);
     reset();
   });

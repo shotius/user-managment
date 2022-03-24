@@ -1,4 +1,4 @@
-import { ExampleObject } from './../../../../types';
+import { IUserObject } from './../../../../types';
 import { useUserTable } from './../../tables/UserTable/useUserTable';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -36,7 +36,7 @@ export const useUserDeleteModal = () => {
     onClose();
   }
 
-  function handleDelete(user: ExampleObject) {
+  function handleDelete(user: IUserObject) {
     setIsDeleting(true);
     dispatch(deleteUser(user.id)).then(deleteSuccess).catch(handleError);
   }
