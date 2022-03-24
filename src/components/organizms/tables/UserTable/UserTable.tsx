@@ -7,9 +7,15 @@ import {
   Th,
   Thead,
   Tr,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
-import { useFlexLayout, useRowSelect, useSortBy, useTable } from 'react-table';
+import {
+  useFlexLayout,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useTable,
+} from 'react-table';
 import { ButtonIconRound } from 'src/components/atoms/buttons/ButtonIconRound';
 import { ButtonPagin } from 'src/components/atoms/buttons/PaginButton';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
@@ -23,17 +29,25 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
   const { data, columns, getAdditionalColumns, checkIfActive } = useUserTable();
 
   // react table variables
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-      },
-      useFlexLayout,
-      useSortBy,
-      useRowSelect,
-      getAdditionalColumns
-    );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    setPageSize,
+    state: { pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useFlexLayout,
+    useSortBy,
+    usePagination,
+    useRowSelect,
+    getAdditionalColumns
+  );
 
   return (
     <>
@@ -58,7 +72,7 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
             })}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <Tr {...row.getRowProps()}>
@@ -82,10 +96,14 @@ export const UserTable: React.FC<UserTableProps> = ({}) => {
         <HStack w="full" justify="space-between">
           <HStack w="220px" justify="space-between">
             <TextMain wordBreak={'keep-all'}>Records on page</TextMain>
-            <Select w="80px">
-              <option>5</option>
-              <option>10</option>
-              <option>20</option>
+            <Select
+              w="80px"
+              value={pageSize}
+              onChange={(e) => setPageSize(+e.currentTarget.value)}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
             </Select>
           </HStack>
           <HStack>
