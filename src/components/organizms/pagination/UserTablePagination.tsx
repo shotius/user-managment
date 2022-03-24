@@ -43,7 +43,6 @@ export const UserTablePagination: React.FC<PaginationProps> = ({}) => {
           onClick={withScroll(previousPage)}
           icon={<DropdownIcon transform={'rotate(90deg)'} />}
         />
-        {console.log('pageNumbersToShow: ', pageNumbersToShow, "pageIndex: ", pageIndex)}
         {pageNumbersToShow.map((page) => {
           if (page === 'dots') {
             return <TextMain>...</TextMain>;

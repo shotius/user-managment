@@ -10,6 +10,7 @@ import { UserTableTemplate } from 'src/components/templates/UserTableTemplate';
 interface UserListPageProps {}
 
 export const UserListPage: FC<UserListPageProps> = ({}) => {
+  window.document.body.style.overflowY = 'scroll';
   return (
     <>
       {/* Header  */}

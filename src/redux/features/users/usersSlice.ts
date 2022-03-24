@@ -1,11 +1,11 @@
+import { ExampleObject } from './../../../types';
 import {
   createAsyncThunk,
   createSlice,
   current,
-  PayloadAction
+  PayloadAction,
 } from '@reduxjs/toolkit';
 import { userService } from 'src/services/user.services';
-import { ExampleObject } from 'src/types';
 import { isString } from 'src/utils/functions';
 import type { RootState } from '../../app/store';
 import { userSliceUtils } from './userSlice.utils';
@@ -15,10 +15,12 @@ const { removeUser, replaceUser } = userSliceUtils;
 interface UsersState {
   users: ExampleObject[];
   selectedUser?: ExampleObject;
+  searchWord: string;
 }
 
 const initialState: UsersState = {
   users: [],
+  searchWord: '',
 };
 
 // Get users
@@ -85,6 +87,12 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
+    setSearchWord: (state, action: PayloadAction<string>) => {
+      state.searchWord = action.payload;
+    },
+    setUsers: (state, action: PayloadAction<ExampleObject[]>) => {
+      state.users = action.payload;
+    },
     setUserForSetup: (
       state,
       action: PayloadAction<ExampleObject | undefined>
@@ -115,10 +123,11 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { setUserForSetup } = usersSlice.actions;
+export const { setUserForSetup, setUsers, setSearchWord } = usersSlice.actions;
 
 // Selectors
 export const selectUsers = (state: RootState) => state.users.users;
 export const selectUser = (state: RootState) => state.users.selectedUser;
+export const selectSearchWord = (state: RootState) => state.users.searchWord;
 
 export default usersSlice.reducer;

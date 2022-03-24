@@ -4,12 +4,12 @@ import usersSlice from '../features/users/usersSlice';
 
 const store = configureStore({
   reducer: {
-    modals: modalsSlice, 
-    users: usersSlice
+    modals: modalsSlice,
+    users: usersSlice,
   },
 });
 
-export default store
+export default store;
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
