@@ -1,10 +1,11 @@
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {
   selectSearchWord,
   setSearchWord,
 } from 'src/redux/features/users/usersSlice';
+import debounce from 'lodash.debounce';
 
 interface InputWithLeftIconProps {
   icon: any;
@@ -16,9 +17,13 @@ export const InputWithLeftIcon: React.FC<InputWithLeftIconProps> = ({
   const searchWord = useAppSelector(selectSearchWord);
   const dispatch = useAppDispatch();
 
-  function handleChange(e: React.SyntheticEvent<HTMLInputElement>) {
-    dispatch(setSearchWord(e.currentTarget.value));
+  function changeHandler(e: React.SyntheticEvent<HTMLInputElement>) {
+    dispatch(setSearchWord((e.target as HTMLInputElement).value));
   }
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(changeHandler, 300)
+  , []);
 
   return (
     <InputGroup w="auto">
@@ -27,8 +32,7 @@ export const InputWithLeftIcon: React.FC<InputWithLeftIconProps> = ({
         placeholder="Type to filter users..."
         border="1px solid lightGrey"
         borderRadius={'8px'}
-        value={searchWord}
-        onChange={handleChange}
+        onChange={debouncedChangeHandler}
       />
     </InputGroup>
   );

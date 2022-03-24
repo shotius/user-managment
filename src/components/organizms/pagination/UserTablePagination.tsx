@@ -45,11 +45,12 @@ export const UserTablePagination: React.FC<PaginationProps> = ({}) => {
         />
         {pageNumbersToShow.map((page) => {
           if (page === 'dots') {
-            return <TextMain>...</TextMain>;
+            return <TextMain key={page}>...</TextMain>;
           } else {
             return (
               <ButtonPagin
-                isActive={pageIndex === page }
+                key={page}
+                isActive={pageIndex === page}
                 onClick={() => withScroll(gotoPage(page))}
               >
                 {page + 1}

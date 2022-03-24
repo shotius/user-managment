@@ -1,15 +1,16 @@
+import { ExampleObject } from './../../../../types';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
 import {
   getUsers,
   selectSearchWord,
-  setUsers,
 } from 'src/redux/features/users/usersSlice';
 import { IUserTableColumn } from 'src/types';
 import { UserInfoCell } from './cells/UserInfoCell';
 import { UserRoleCell } from './cells/UserRoleCell';
 import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
+import { useTimeout } from '@chakra-ui/react';
 
 export const useUserTableData = () => {
   const users = useAppSelector((state) => state.users.users);
@@ -28,12 +29,7 @@ export const useUserTableData = () => {
   }, [users]);
 
   useEffect(() => {
-    users &&
-      setData(
-        users.filter((user) =>
-          user.user.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())
-        )
-      );
+    users && setData(filterUsersByString(users, searchWord));
   }, [searchWord]);
 
   // create collumns
@@ -58,6 +54,12 @@ export const useUserTableData = () => {
     ],
     []
   );
+
+  function filterUsersByString(arr: ExampleObject[], str: string) {
+    return arr.filter((val) =>
+      val.user.toLocaleLowerCase().includes(str.toLocaleLowerCase())
+    );
+  }
 
   return { data, columns };
 };

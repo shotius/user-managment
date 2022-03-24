@@ -25,6 +25,7 @@ export const useUserTable = () => {
   const dispatch = useAppDispatch();
   const { data, columns } = useUserTableData();
 
+  // react-hook-table: Generate table
   const {
     getTableProps,
     getTableBodyProps,
@@ -114,7 +115,6 @@ export const useUserTable = () => {
     getTableBodyProps,
     headerGroups,
     page,
-    // pagination
     prepareRow,
     setPageSize,
     nextPage,
