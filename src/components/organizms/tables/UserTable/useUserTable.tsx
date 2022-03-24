@@ -1,11 +1,15 @@
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Cell, Hooks } from 'react-table';
+import {
+  Cell, Hooks, useFlexLayout,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useTable
+} from 'react-table';
 import { CreateButton } from 'src/components/atoms/buttons/CreateButton';
 import { useAppDispatch, useAppSelector } from 'src/redux/app/hooks';
-import {
-  getUsers, updateUser
-} from 'src/redux/features/users/usersSlice';
+import { getUsers, updateUser } from 'src/redux/features/users/usersSlice';
 import { ExampleObject, IUserTableColumn } from 'src/types';
 import { UserActionHeaderCell } from './cells/UserActionHeaderCell';
 import { UserActionsCell } from './cells/UserActionsCell';
@@ -14,6 +18,7 @@ import { UserProfileButton } from './cells/UserProfileButton';
 import { UserRoleCell } from './cells/UserRoleCell';
 import { UserStatusSwitch } from './cells/UserStatusSwitch';
 import { UserTableHeader } from './cells/UserTableHeader';
+
 
 export const useUserTable = () => {
   const users = useAppSelector((state) => state.users.users);
@@ -52,6 +57,31 @@ export const useUserTable = () => {
     []
   );
 
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    // pagination
+    prepareRow,
+    setPageSize,
+    nextPage,
+    previousPage,
+    gotoPage,
+    pageCount,
+    state: { pageSize, pageIndex },
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useFlexLayout,
+    useSortBy,
+    usePagination,
+    useRowSelect,
+    getAdditionalColumns
+  );
+
   function handleError(error: unknown) {
     console.log('unhandled error: ', error);
   }
@@ -72,7 +102,8 @@ export const useUserTable = () => {
   // Adding some columns to the table
   function getAdditionalColumns(hooks: Hooks<ExampleObject>) {
     hooks.visibleColumns.push((columns) => [
-      { // Selection - first column
+      {
+        // Selection - first column
         id: 'selection',
         maxWidth: 80,
         Header: () => <CreateButton onClick={() => navigate('/invite-user')} />,
@@ -81,12 +112,27 @@ export const useUserTable = () => {
         },
       },
       ...columns,
-      { // Actions collumn
+      {
+        // Actions collumn
         id: 'actions',
         Header: UserActionHeaderCell,
         Cell: UserActionsCell,
       },
     ]);
+  }
+
+  function scrollTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  function withScroll(fn: any) {
+    scrollTop();
+    return () => {
+      fn();
+    };
   }
 
   return {
@@ -95,5 +141,19 @@ export const useUserTable = () => {
     getAdditionalColumns,
     checkIfActive,
     handleToggleStatus,
+    withScroll,
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    // pagination
+    prepareRow,
+    setPageSize,
+    nextPage,
+    previousPage,
+    gotoPage,
+    pageCount,
+    pageSize,
+    pageIndex,
   };
 };
