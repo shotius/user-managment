@@ -13,7 +13,7 @@ import { useFlexLayout, useRowSelect, useSortBy, useTable } from 'react-table';
 import { ButtonIconRound } from 'src/components/atoms/buttons/ButtonIconRound';
 import { ButtonPagin } from 'src/components/atoms/buttons/PaginButton';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
-import { DropdownIcon } from 'src/components/icons/DropdownIcon';
+import { DropdownIcon } from 'src/components/atoms/icons/DropdownIcon';
 import { useUserTable } from './useUserTable';
 
 interface UserTableProps {}

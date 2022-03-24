@@ -1,11 +1,25 @@
 {
   "users": [
     {
-      "id": "YmHfnQM1Bx-rYTKFM8NLX",
+      "id": "m4uyBBiBNGNc6ZfDcjiQW",
       "status": "active",
-      "user": "Shotius (changed)",
+      "user": "Leva12",
       "email": "sh.archemashvili@gmail.com",
       "role": "admin"
+    },
+    {
+      "id": "YmHfnQM1Bx-rYTKFM8NLX",
+      "status": "active",
+      "user": "Shotius",
+      "email": "sh.archemashvili@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": "iiqGv_zJtgthK4LY1j8QU",
+      "status": "active",
+      "user": "Tester",
+      "email": "123@gmail.com",
+      "role": "user"
     }
   ]
 }

@@ -2,9 +2,9 @@ import { VStack } from '@chakra-ui/react';
 import { FormEventHandler } from 'react';
 import { useForm } from 'react-hook-form';
 import { InputOutLineWithIcon } from 'src/components/atoms/Input/InputOutLineWithIcon';
-import { KeyIcon } from 'src/components/icons/KeyIcon';
-import { LetterIcon } from 'src/components/icons/LetterIcon';
-import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
+import { KeyIcon } from 'src/components/atoms/icons/KeyIcon';
+import { LetterIcon } from 'src/components/atoms/icons/LetterIcon';
+import { UserProfileIcon } from 'src/components/atoms/icons/UserProfileIcon';
 import { SelectWithIcon } from '../selects/SelectWithIcon';
 
 interface FormUserEditProps {

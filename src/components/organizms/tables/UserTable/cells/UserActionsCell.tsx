@@ -1,8 +1,8 @@
 import { HStack, IconButton } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { Cell } from 'react-table';
-import { SettingIcon } from 'src/components/icons/SettingIcon';
-import { TrashBinIcon } from 'src/components/icons/TrashBinIcon';
+import { SettingIcon } from 'src/components/atoms/icons/SettingIcon';
+import { TrashBinIcon } from 'src/components/atoms/icons/TrashBinIcon';
 import { useAppDispatch } from 'src/redux/app/hooks';
 import { setUserForSetup } from 'src/redux/features/users/usersSlice';
 import { ExampleObject } from 'src/types';

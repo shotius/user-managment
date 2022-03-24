@@ -1,7 +1,7 @@
 import { Button, HStack, ModalHeader, VStack } from '@chakra-ui/react';
 import { capitalize } from 'src/utils/functions';
 import { TextMain } from '../../../atoms/Typography/TextMain';
-import { UserProfileIcon } from '../../../icons/UserProfileIcon';
+import { UserProfileIcon } from '../../../atoms/icons/UserProfileIcon';
 import { ModalWrapper } from '../../../molecules/modals/ModalWrapper';
 import { useUserDeleteModal } from './useUserDeleteModal';
 

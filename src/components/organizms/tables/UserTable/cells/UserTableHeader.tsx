@@ -1,6 +1,6 @@
 import { Button, HStack, Icon } from '@chakra-ui/react';
 import { TextMain } from 'src/components/atoms/Typography/TextMain';
-import { DropdownIcon } from 'src/components/icons/DropdownIcon';
+import { DropdownIcon } from 'src/components/atoms/icons/DropdownIcon';
 
 export const UserTableHeader = (props: any) => {
   const {

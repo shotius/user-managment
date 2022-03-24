@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ButtonIconRound } from 'src/components/atoms/buttons/ButtonIconRound';
-import { UserProfileIcon } from 'src/components/icons/UserProfileIcon';
+import { UserProfileIcon } from 'src/components/atoms/icons/UserProfileIcon';
 
 interface UserProfileButtonProps {}
 

@@ -1,14 +1,14 @@
-import { userSliceUtils } from './userSlice.utils';
 import {
   createAsyncThunk,
   createSlice,
   current,
-  PayloadAction,
+  PayloadAction
 } from '@reduxjs/toolkit';
 import { userService } from 'src/services/user.services';
 import { ExampleObject } from 'src/types';
-import { isString, sleep } from 'src/utils/functions';
+import { isString } from 'src/utils/functions';
 import type { RootState } from '../../app/store';
+import { userSliceUtils } from './userSlice.utils';
 
 const { removeUser, replaceUser } = userSliceUtils;
 
